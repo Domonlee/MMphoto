@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -20,6 +24,8 @@ import domon.cn.mmphoto.R;
 public class AlbumActivity extends AppCompatActivity {
     @BindView(R.id.albumtitle_mid_tv)
     TextView mTitleTv;
+    @BindView(R.id.album_more_rv)
+    RecyclerView mRecyclerView;
 
     @OnClick(R.id.albumtitle_left_iv)
     void onBackClick() {
@@ -27,7 +33,7 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.album_main_iv)
-    void onMainClick(){
+    void onMainClick() {
         PhotoViewActivity.startActivity(this);
     }
 
@@ -50,6 +56,39 @@ public class AlbumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_album);
 
         mUnbinder = ButterKnife.bind(this);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        //todo nedd recyclerview adapter
+        //test start
+        mRecyclerView.setAdapter(new RecyclerView.Adapter() {
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = getLayoutInflater().inflate(R.layout.item_image_tag, parent, false);
+                return new Holder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return 4;
+            }
+
+            class Holder extends RecyclerView.ViewHolder {
+
+                public Holder(View itemView) {
+                    super(itemView);
+                }
+            }
+        });
+
+        //test end
     }
 
     @Override
