@@ -35,6 +35,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @BindView(R.id.recycler_home)
     RecyclerView mRecyclerHome;
 
+    private HomeContract.Presenter mPresenter;
+
     private Unbinder mUnbinder;
 
     public static HomeFragment newInstance() {
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new HomePresenter(this);
     }
 
     @Nullable
@@ -80,12 +83,14 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         });
         //banner test end
 
+        mPresenter.requestHomeData();
+
         return view;
     }
 
     @Override
     public void setPresenter(HomeContract.Presenter presenter) {
-
+        mPresenter = presenter;
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.lzy.okgo.OkGo;
 
+import okhttp3.OkHttpClient;
+
 /**
  * Created by Domon on 2017/8/8.
  */
@@ -28,6 +30,10 @@ public class MyApp extends Application {
         mInstance = this;
         mContext = getApplicationContext();
 
-        OkGo.getInstance().init(this);
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        OkGo.getInstance().init(this)
+                .setOkHttpClient(builder.build())
+                .setRetryCount(3);
     }
 }

@@ -10,7 +10,6 @@ import domon.cn.mmphoto.BaseView;
 public interface HomeContract {
     interface View extends BaseView<Presenter> {
         void showEmptyError();
-
     }
 
     interface Presenter extends BasePresenter {
