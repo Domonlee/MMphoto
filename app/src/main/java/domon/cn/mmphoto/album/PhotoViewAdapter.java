@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.chrisbanes.photoview.PhotoView;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import domon.cn.mmphoto.utils.GlideUtils;
 
@@ -37,7 +37,6 @@ public class PhotoViewAdapter extends PagerAdapter {
         photoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Logger.d(TAG, "onClick photoView");
                 mAppCompatActivity.finish();
             }
         });
