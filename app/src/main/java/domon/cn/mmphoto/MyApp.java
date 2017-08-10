@@ -3,6 +3,7 @@ package domon.cn.mmphoto;
 import android.app.Application;
 import android.content.Context;
 
+import com.lzy.okgo.OkGo;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -30,5 +31,7 @@ public class MyApp extends Application {
         mContext = getApplicationContext();
 
         Logger.addLogAdapter(new AndroidLogAdapter());
+
+        OkGo.getInstance().init(this);
     }
 }
