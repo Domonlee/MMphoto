@@ -38,6 +38,7 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
     private Unbinder mUnbinder;
+    private int mItemCountOnScreen = 3;
 
     /**
      * start a photo album,param intent include (album title, album id, album img url),into a modle
@@ -62,12 +63,21 @@ public class AlbumActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         //todo nedd recyclerview adapter
+        //todo the sub view's width is wrong
         //test start
         mRecyclerView.setAdapter(new RecyclerView.Adapter() {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = getLayoutInflater().inflate(R.layout.item_image_tag, parent, false);
-                return new Holder(view);
+                Holder viewHolder = new Holder(view);
+                if (mItemCountOnScreen == -1) {
+                    mItemCountOnScreen = getItemCount();
+                }
+
+//                viewHolder.itemView.setMinimumWidth(parent.getWidth() / getItemCount());
+                viewHolder.itemView.setMinimumWidth(30);
+
+                return viewHolder;
             }
 
             @Override
@@ -85,6 +95,13 @@ public class AlbumActivity extends AppCompatActivity {
                 public Holder(View itemView) {
                     super(itemView);
                 }
+            }
+        });
+
+        mRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
