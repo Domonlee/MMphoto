@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.R;
 
@@ -17,16 +18,27 @@ import domon.cn.mmphoto.R;
  */
 
 public class AlbumActivity extends AppCompatActivity {
-    @BindView(R.id.title_mid_tv)
+    @BindView(R.id.albumtitle_mid_tv)
     TextView mTitleTv;
+
+    @OnClick(R.id.albumtitle_left_iv)
+    void onBackClick() {
+        this.finish();
+    }
+
+    @OnClick(R.id.album_main_iv)
+    void onMainClick(){
+        PhotoViewActivity.startActivity(this);
+    }
 
     private Unbinder mUnbinder;
 
     /**
-     * start a photo album,param intent include (album title, album id, album img url)
+     * start a photo album,param intent include (album title, album id, album img url),into a modle
+     *
      * @param context
      */
-    public void startActivity(Context context) {
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, AlbumActivity.class);
         //todo intent
         context.startActivity(intent);

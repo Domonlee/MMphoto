@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -18,8 +17,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import domon.cn.mmphoto.MyApp;
 import domon.cn.mmphoto.R;
+import domon.cn.mmphoto.album.AlbumActivity;
 import domon.cn.mmphoto.utils.BannerImageLoader;
 
 /**
@@ -71,7 +70,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Toast.makeText(MyApp.getAppContext(), images.get(position), Toast.LENGTH_SHORT).show();
+                //test goto album
+                AlbumActivity.startActivity(getActivity());
+
             }
         });
         //banner test end

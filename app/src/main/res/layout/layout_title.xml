@@ -12,6 +12,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:padding="4dp"
+        android:layout_gravity="center"
         android:visibility="gone"/>
 
     <TextView
@@ -26,6 +27,7 @@
         android:id="@+id/title_right_iv"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:gravity="center"
         android:padding="4dp"
         android:visibility="gone"/>
 

@@ -4,6 +4,57 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/layout_title"/>
+    <!--ablum info-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="@mipmap/album_background">
+
+        <ImageView
+            android:id="@+id/album_main_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="80dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:id="@+id/albumtitle_ll"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/albumtitle_left_iv"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:padding="4dp"
+                android:src="@mipmap/jc_back"/>
+
+            <TextView
+                android:id="@+id/albumtitle_mid_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--other album layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="#fff">
+
+    </LinearLayout>
 
 </LinearLayout>
