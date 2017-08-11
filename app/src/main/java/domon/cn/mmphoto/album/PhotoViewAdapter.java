@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.apkfuns.logutils.LogUtils;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import domon.cn.mmphoto.utils.GlideUtils;
 
@@ -30,6 +30,12 @@ public class PhotoViewAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         String url = urls.get(position);
         PhotoView photoView = new PhotoView(mAppCompatActivity);
+        //test start
+        ViewGroup.LayoutParams layoutParams =  new ViewGroup.LayoutParams(200,200);
+//        layoutParams.width = 200; layoutParams.height = 200;
+        photoView.setLayoutParams(layoutParams);
+
+        //test end
         GlideUtils.loadImageView(mAppCompatActivity, url, photoView);
 
         container.addView(photoView);
@@ -62,5 +68,12 @@ public class PhotoViewAdapter extends PagerAdapter {
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
+    }
+
+    public void setUrls(List<String> urls) {
+        LogUtils.e(urls.size());
+        this.urls = urls;
+        notifyDataSetChanged();
+        LogUtils.e("notify");
     }
 }

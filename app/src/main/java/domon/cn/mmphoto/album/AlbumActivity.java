@@ -7,25 +7,33 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.R;
+import domon.cn.mmphoto.callback.JsonCallback;
+import domon.cn.mmphoto.data.AlbumData;
+import domon.cn.mmphoto.utils.GlideUtils;
 
 /**
  * Created by Domon on 2017/8/9.
  */
 
 public class AlbumActivity extends AppCompatActivity {
+    public static final String ALBUMID = "albumId";
     @BindView(R.id.albumtitle_mid_tv)
     TextView mTitleTv;
     @BindView(R.id.album_more_rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.album_main_iv)
+    ImageView mAlbumMainIv;
 
     @OnClick(R.id.albumtitle_left_iv)
     void onBackClick() {
@@ -34,20 +42,23 @@ public class AlbumActivity extends AppCompatActivity {
 
     @OnClick(R.id.album_main_iv)
     void onMainClick() {
-        PhotoViewActivity.startActivity(this);
+        PhotoViewActivity.startActivity(this, mAlbumData.getAtlas().getAtlasID());
     }
 
     private Unbinder mUnbinder;
-    private int mItemCountOnScreen = 3;
+    private AlbumData mAlbumData = new AlbumData();
+    private AlbumRecyclerAdapter mAdapter;
+    private int mAlbumId;
 
     /**
-     * start a photo album,param intent include (album title, album id, album img url),into a modle
+     * input albumId
      *
      * @param context
+     * @param albumId
      */
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, int albumId) {
         Intent intent = new Intent(context, AlbumActivity.class);
-        //todo intent
+        intent.putExtra(ALBUMID, albumId);
         context.startActivity(intent);
     }
 
@@ -58,54 +69,47 @@ public class AlbumActivity extends AppCompatActivity {
 
         mUnbinder = ButterKnife.bind(this);
 
+        mAlbumId = getIntent().getIntExtra(ALBUMID, 0);
+
+        initRecyclerView();
+
+        //todo the sub view's width is wrong
+        mAdapter = new AlbumRecyclerAdapter(mAlbumData.getRecommend());
+        mRecyclerView.setAdapter(mAdapter);
+        reqAlbumInfo();
+    }
+
+    private void initRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+    }
 
-        //todo nedd recyclerview adapter
-        //todo the sub view's width is wrong
-        //test start
-        mRecyclerView.setAdapter(new RecyclerView.Adapter() {
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = getLayoutInflater().inflate(R.layout.item_image_tag, parent, false);
-                Holder viewHolder = new Holder(view);
-                if (mItemCountOnScreen == -1) {
-                    mItemCountOnScreen = getItemCount();
-                }
+    private void reqAlbumInfo() {
+        String testUrl = "http://uuu.shafa5.com/GetAtlas.ashx?id=2300";
+        String reqUrl = "http://uuu.shafa5.com/GetAtlas.ashx?id=" + mAlbumId;
 
-//                viewHolder.itemView.setMinimumWidth(parent.getWidth() / getItemCount());
-                viewHolder.itemView.setMinimumWidth(30);
+        OkGo.<AlbumData>get(testUrl)
+                .execute(new JsonCallback<AlbumData>() {
+                    @Override
+                    public void onSuccess(Response<AlbumData> response) {
+                        mAlbumData = response.body();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateUI();
+                            }
+                        });
+                    }
+                });
+    }
 
-                return viewHolder;
-            }
+    private void updateUI() {
+        mTitleTv.setText(mAlbumData.getAtlas().getAtlasTitle());
+        GlideUtils.loadImageView(this, mAlbumData.getAtlas().getAtlasImg(), mAlbumMainIv);
 
-            @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return 4;
-            }
-
-            class Holder extends RecyclerView.ViewHolder {
-
-                public Holder(View itemView) {
-                    super(itemView);
-                }
-            }
-        });
-
-        mRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        //test end
+        mAdapter.setNewData(mAlbumData.getRecommend());
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

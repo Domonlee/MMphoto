@@ -8,6 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.apkfuns.logutils.LogUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +30,7 @@ import domon.cn.mmphoto.R;
  */
 
 public class PhotoViewActivity extends AppCompatActivity {
+    public static final String ALBUMID = "albumId";
     @BindView(R.id.photo_view_vp)
     PhotoViewPager mPhotoViewPager;
     @BindView(R.id.photo_position_tv)
@@ -34,11 +43,13 @@ public class PhotoViewActivity extends AppCompatActivity {
 
     private Unbinder mUnbinder;
     private PhotoViewAdapter mAdapter;
-    private List<String> mPhotoUrls = new ArrayList<>();
+    private static List<String> mPhotoUrls = new ArrayList<>();
+    private int mAlbumID;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, int albumId) {
         Intent intent = new Intent(context, PhotoViewActivity.class);
-        //todo get urls
+        intent.putExtra(ALBUMID, albumId);
+
         context.startActivity(intent);
     }
 
@@ -49,9 +60,9 @@ public class PhotoViewActivity extends AppCompatActivity {
 
         mUnbinder = ButterKnife.bind(this);
 
-        mPhotoUrls.add(0, "http://zer.sistershsmy.com/MTUzOQ15391539/0718/1500350147.jpg");
-        mPhotoUrls.add(1, "http://zer.sistershsmy.com/MTcxNQ17151715/0706/1499321422.png");
-        mPhotoUrls.add(2, "http://zer.sistershsmy.com/MTcyMA17201720/0705/1499228376.jpg");
+        mAlbumID = getIntent().getIntExtra(ALBUMID, 0);
+
+        reqPhotos();
 
         mAdapter = new PhotoViewAdapter(mPhotoUrls, this);
         mPhotoViewPager.setAdapter(mAdapter);
@@ -64,6 +75,27 @@ public class PhotoViewActivity extends AppCompatActivity {
                 //currentPositon = position;
             }
         });
+    }
+
+    private void reqPhotos() {
+        final String reqUrl = "http://uuu.shafa5.com/GetImgList.ashx?id=" + mAlbumID;
+
+        OkGo.<String>get(reqUrl)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
+                        JsonArray jsonArray = jsonObject.getAsJsonArray("imglist");
+
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            mPhotoUrls.add(i, jsonArray.get(i).getAsJsonObject().get("ImgUrl").toString());
+                        }
+
+                        LogUtils.e(mPhotoUrls.size());
+                        mAdapter.setUrls(mPhotoUrls);
+                    }
+                });
     }
 
     @Override
