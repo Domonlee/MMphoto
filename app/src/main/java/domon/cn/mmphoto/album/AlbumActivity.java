@@ -90,7 +90,7 @@ public class AlbumActivity extends AppCompatActivity {
         String testUrl = "http://uuu.shafa5.com/GetAtlas.ashx?id=2300";
         String reqUrl = "http://uuu.shafa5.com/GetAtlas.ashx?id=" + mAlbumId;
 
-        OkGo.<AlbumData>get(testUrl)
+        OkGo.<AlbumData>get(reqUrl)
                 .execute(new JsonCallback<AlbumData>() {
                     @Override
                     public void onSuccess(Response<AlbumData> response) {
