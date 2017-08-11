@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MMphoto</string>
+    <string name="prompt_item_horizontal_multiple_more"><![CDATA[更多  >]]></string>
 </resources>

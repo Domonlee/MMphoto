@@ -116,6 +116,8 @@
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
+
+
     <color name="table_bg">#fff8f8f8</color>
     <color name="toast_stroke_gray">#99d4d4d4</color>
     <color name="transparent">#00000000</color>
