@@ -15,7 +15,7 @@ public class AlbumData {
      */
 
     private AtlasEntity atlas;
-    private List<RecommendEntity> recommend;
+    private List<PhotoData> recommend;
 
     public AtlasEntity getAtlas() {
         return atlas;
@@ -25,11 +25,11 @@ public class AlbumData {
         this.atlas = atlas;
     }
 
-    public List<RecommendEntity> getRecommend() {
+    public List<PhotoData> getRecommend() {
         return recommend;
     }
 
-    public void setRecommend(List<RecommendEntity> recommend) {
+    public void setRecommend(List<PhotoData> recommend) {
         this.recommend = recommend;
     }
 
@@ -40,72 +40,6 @@ public class AlbumData {
          * AtlasTitle : ROSI写真No.2047 浴室真空肉丝美臀玉腿写真
          * AtlasImg : http://uuu.shafa5.com/ros/2300/2047.jpg
          * AtlasToUrl : http://www.rosmm.com/rosimm/2017/07/15/2300.htm
-         * AtlasCost : 20
-         */
-
-        private int ID;
-        private int AtlasID;
-        private String AtlasTitle;
-        private String AtlasImg;
-        private String AtlasToUrl;
-        private int AtlasCost;
-
-        public int getID() {
-            return ID;
-        }
-
-        public void setID(int ID) {
-            this.ID = ID;
-        }
-
-        public int getAtlasID() {
-            return AtlasID;
-        }
-
-        public void setAtlasID(int AtlasID) {
-            this.AtlasID = AtlasID;
-        }
-
-        public String getAtlasTitle() {
-            return AtlasTitle;
-        }
-
-        public void setAtlasTitle(String AtlasTitle) {
-            this.AtlasTitle = AtlasTitle;
-        }
-
-        public String getAtlasImg() {
-            return AtlasImg;
-        }
-
-        public void setAtlasImg(String AtlasImg) {
-            this.AtlasImg = AtlasImg;
-        }
-
-        public String getAtlasToUrl() {
-            return AtlasToUrl;
-        }
-
-        public void setAtlasToUrl(String AtlasToUrl) {
-            this.AtlasToUrl = AtlasToUrl;
-        }
-
-        public int getAtlasCost() {
-            return AtlasCost;
-        }
-
-        public void setAtlasCost(int AtlasCost) {
-            this.AtlasCost = AtlasCost;
-        }
-    }
-
-    public static class RecommendEntity {
-        /**
-         * ID : 12
-         * AtlasID : 2326
-         * AtlasTitle : ROSI写真No.2073 黑色连体开档皮衣翘臀
-         * AtlasImg : http://uuu.shafa5.com/ros/2326/2073.jpg
-         * AtlasToUrl : http://www.rosmm.com/rosimm/2017/08/10/2326.htm
          * AtlasCost : 20
          */
 
