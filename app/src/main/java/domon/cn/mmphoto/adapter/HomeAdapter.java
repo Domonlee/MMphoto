@@ -48,12 +48,12 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<MultipleItemHome, Bas
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MultipleItemHome item) {
+    protected void convert(BaseViewHolder helper, final MultipleItemHome item) {
         switch (helper.getItemViewType()) {
             case MultipleItemHome.BANNER:
-                Banner mBanner = helper.getView(R.id.home_banner);
+                final Banner mBanner = helper.getView(R.id.home_banner);
                 mBanner.setImageLoader(new BannerImageLoader());
-                List<PhotoData> banner = item.getItem();
+                final List<PhotoData> banner = item.getItem();
                 for (PhotoData atlasBean : banner) {
                     images.add(atlasBean.getAtlasImg());
                 }
@@ -64,7 +64,7 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<MultipleItemHome, Bas
                 mBanner.setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        AlbumActivity.startActivity(mContext);
+                        AlbumActivity.startActivity(mContext, banner.get(position).getAtlasID());
                     }
                 });
                 break;
