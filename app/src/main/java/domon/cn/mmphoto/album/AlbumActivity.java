@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.R;
+import domon.cn.mmphoto.adapter.MultipleHorAdapter;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.AlbumData;
 import domon.cn.mmphoto.utils.GlideUtils;
@@ -47,7 +48,7 @@ public class AlbumActivity extends AppCompatActivity {
 
     private Unbinder mUnbinder;
     private AlbumData mAlbumData = new AlbumData();
-    private AlbumRecyclerAdapter mAdapter;
+    private MultipleHorAdapter mAdapter;
     private int mAlbumId;
 
     /**
@@ -74,7 +75,7 @@ public class AlbumActivity extends AppCompatActivity {
         initRecyclerView();
 
         //todo the sub view's width is wrong
-        mAdapter = new AlbumRecyclerAdapter(mAlbumData.getRecommend());
+        mAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical,mAlbumData.getRecommend());
         mRecyclerView.setAdapter(mAdapter);
         reqAlbumInfo();
     }
