@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.MultipleHorAdapter;
 import domon.cn.mmphoto.callback.JsonCallback;
@@ -71,6 +72,7 @@ public class AlbumActivity extends AppCompatActivity {
         mUnbinder = ButterKnife.bind(this);
 
         mAlbumId = getIntent().getIntExtra(ALBUMID, 0);
+        mAlbumId = 2301;
 
         initRecyclerView();
 
@@ -87,8 +89,7 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
     private void reqAlbumInfo() {
-        String testUrl = "http://uuu.shafa5.com/GetAtlas.ashx?id=2300";
-        String reqUrl = "http://uuu.shafa5.com/GetAtlas.ashx?id=" + mAlbumId;
+        String reqUrl = Const.REQ_ALBUM_WITH_ID + mAlbumId;
 
         OkGo.<AlbumData>get(reqUrl)
                 .execute(new JsonCallback<AlbumData>() {

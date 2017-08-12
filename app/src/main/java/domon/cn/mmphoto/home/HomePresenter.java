@@ -5,9 +5,9 @@ import com.lzy.okgo.model.Response;
 
 import java.util.List;
 
+import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.Atlas;
-import domon.cn.mmphoto.data.AtlasList;
 import domon.cn.mmphoto.data.PhotoData;
 
 /**
@@ -31,7 +31,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void requestHomeData() {
-        OkGo.<Atlas>get("http://uuu.shafa5.com/GetMain.ashx")
+        OkGo.<Atlas>get(Const.REQ_MAIN)
                 .execute(new JsonCallback<Atlas>() {
                     @Override
                     public void onSuccess(Response<Atlas> response) {

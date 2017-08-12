@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 
 /**
@@ -78,7 +79,7 @@ public class PhotoViewActivity extends AppCompatActivity {
     }
 
     private void reqPhotos() {
-        final String reqUrl = "http://uuu.shafa5.com/GetImgList.ashx?id=" + mAlbumID;
+        final String reqUrl = Const.REQ_IMGLIST_WITH_ID + mAlbumID;
 
         OkGo.<String>get(reqUrl)
                 .execute(new StringCallback() {
