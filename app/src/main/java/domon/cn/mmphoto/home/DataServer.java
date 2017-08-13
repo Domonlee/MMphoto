@@ -3,6 +3,7 @@ package domon.cn.mmphoto.home;
 import java.util.ArrayList;
 import java.util.List;
 
+import domon.cn.mmphoto.data.MultipleItemCategory;
 import domon.cn.mmphoto.data.MultipleItemHome;
 import domon.cn.mmphoto.data.PhotoData;
 
@@ -28,4 +29,16 @@ public class DataServer {
         return result;
     }
 
+    public static List<MultipleItemCategory> getMultipleCategoryItemData(ArrayList<String> urls){
+
+        List<MultipleItemCategory> result = new ArrayList<>();
+
+        if (result != null && result.size() > 0){
+            result.add(new MultipleItemCategory(MultipleItemCategory.BIG_CATEGORY,urls));
+        }
+
+
+        return result;
+
+    }
 }
