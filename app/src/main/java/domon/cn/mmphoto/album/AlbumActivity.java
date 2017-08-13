@@ -72,7 +72,6 @@ public class AlbumActivity extends AppCompatActivity {
         mUnbinder = ButterKnife.bind(this);
 
         mAlbumId = getIntent().getIntExtra(ALBUMID, 0);
-        mAlbumId = 2301;
 
         initRecyclerView();
 

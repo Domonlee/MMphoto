@@ -26,6 +26,9 @@ import domon.cn.mmphoto.home.DataServer;
  */
 
 public class CategoryFragment extends Fragment {
+    public static final String CATEGORY_ROSI = "Rosi写真";
+    public static final String CATEGORY_MYGIRL = "MyGirl写真";
+
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
     @BindView(R.id.recycler_category)
