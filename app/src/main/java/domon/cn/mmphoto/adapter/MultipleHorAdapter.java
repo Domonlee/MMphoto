@@ -2,6 +2,7 @@ package domon.cn.mmphoto.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -10,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import domon.cn.mmphoto.R;
+import domon.cn.mmphoto.album.AlbumActivity;
 import domon.cn.mmphoto.data.PhotoData;
 import domon.cn.mmphoto.utils.GlideUtils;
 
@@ -29,10 +31,16 @@ public class MultipleHorAdapter extends BaseQuickAdapter<PhotoData, BaseViewHold
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, PhotoData item) {
+    protected void convert(BaseViewHolder helper, final PhotoData item) {
         helper.setText(R.id.tv_item_multiple_horizontal, item.getAtlasTitle());
 
         ImageView imageView = helper.getView(R.id.iv_item_multiple_horizontal);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlbumActivity.startActivity(mContext,item.getAtlasID());
+            }
+        });
         GlideUtils.loadImageView(mContext, item.getAtlasImg(), imageView);
     }
 }
