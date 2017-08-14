@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
     card_view:cardBackgroundColor="@color/white"
     android:orientation="vertical"
     card_view:cardCornerRadius="5dp"
@@ -13,7 +14,7 @@
 
     <RelativeLayout
         android:layout_width="150dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView

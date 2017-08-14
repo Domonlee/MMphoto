@@ -2,7 +2,6 @@ package domon.cn.mmphoto.category;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,18 +15,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import domon.cn.mmphoto.BaseFragment;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.CategoryAdapter;
 import domon.cn.mmphoto.data.MultipleItemCategory;
-import domon.cn.mmphoto.home.DataServer;
+import domon.cn.mmphoto.data.PhotoData;
+import domon.cn.mmphoto.utils.DataServer;
 
 /**
  * Created by Domon on 2017/8/9.
  */
 
-public class CategoryFragment extends Fragment {
-    public static final String CATEGORY_ROSI = "Rosi写真";
-    public static final String CATEGORY_MYGIRL = "MyGirl写真";
+public class CategoryFragment extends BaseFragment implements CategoryContract.View{
 
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
@@ -36,9 +35,9 @@ public class CategoryFragment extends Fragment {
 
     private Unbinder mUnbinder;
     private CategoryAdapter mCategoryAdapter;
+    private CategoryContract.Presenter mPresenter;
 
     public static CategoryFragment newInstance() {
-
         Bundle args = new Bundle();
 
         CategoryFragment fragment = new CategoryFragment();
@@ -49,6 +48,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new CategoryPresenter(this);
     }
 
     @Nullable
@@ -63,20 +63,7 @@ public class CategoryFragment extends Fragment {
         mCategoryAdapter = new CategoryAdapter(new ArrayList<MultipleItemCategory>());
         mRecyclerCategory.setAdapter(mCategoryAdapter);
 
-        //test start
-
-        ArrayList<String> urls = new ArrayList<>();
-
-        urls.add(0, "http://zer.sistershsmy.com/MTUzOQ15391539/0718/1500350147.jpg");
-        urls.add(1, "http://zer.sistershsmy.com/MTcxNQ17151715/0706/1499321422.png");
-        urls.add(2, "http://zer.sistershsmy.com/MTcyMA17201720/0705/1499228376.jpg");
-
-
-        //test end
-
-
-        List<MultipleItemCategory> list = DataServer.getMultipleCategoryItemData(urls);
-        mCategoryAdapter.setNewData(list);
+        mPresenter.requestCategory();
 
         return view;
     }
@@ -85,5 +72,17 @@ public class CategoryFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void setPresenter(CategoryContract.Presenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+
+    @Override
+    public void dataSuccess(List<PhotoData> list) {
+        List<MultipleItemCategory> result = DataServer.getMultipleCategoryItemData(list);
+        mCategoryAdapter.setNewData(result);
     }
 }

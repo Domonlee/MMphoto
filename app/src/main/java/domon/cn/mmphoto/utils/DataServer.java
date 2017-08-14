@@ -1,4 +1,4 @@
-package domon.cn.mmphoto.home;
+package domon.cn.mmphoto.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +30,35 @@ public class DataServer {
         return result;
     }
 
-    public static List<MultipleItemCategory> getMultipleCategoryItemData(ArrayList<String> urls){
-
+    public static List<MultipleItemCategory> getMultipleCategoryItemData(List<PhotoData> list){
         List<MultipleItemCategory> result = new ArrayList<>();
 
-        if (result != null && result.size() > 0){
-            result.add(new MultipleItemCategory(MultipleItemCategory.BIG_CATEGORY,urls));
-        }
+        List<PhotoData> categoryList = new ArrayList<>();
+        PhotoData item = new PhotoData();
+        item.setAtlasID(1+"");
+        item.setAtlasTitle("冷艳尤物");
+        categoryList.add(item);
 
+        item = new PhotoData();
+        item.setAtlasID(2+"");
+        item.setAtlasTitle("可爱萌妹");
+        categoryList.add(item);
+
+        item = new PhotoData();
+        item.setAtlasID(3+"");
+        item.setAtlasTitle("极品身材");
+        categoryList.add(item);
+
+        item = new PhotoData();
+        item.setAtlasID(4+"");
+        item.setAtlasTitle("唯美清新");
+        categoryList.add(item);
+
+        result.add(new MultipleItemCategory(MultipleItemCategory.CATEGORY_TABLE,categoryList));
+
+        if (list != null && list.size() > 0) {
+            result.add(new MultipleItemCategory(MultipleItemCategory.CATEGORY_LIST,list));
+        }
 
         return result;
 

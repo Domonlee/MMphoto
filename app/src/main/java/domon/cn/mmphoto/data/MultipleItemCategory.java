@@ -6,29 +6,23 @@ import java.util.List;
 
 public class MultipleItemCategory implements MultiItemEntity {
 
-    public static final int BIG_CATEGORY = 1;
-    public static final int SMAlL_CATEGORY = 2;
-    public static final int SPLIT_LINE = 3;
-    public static final int LIST_KNOWYOU = 4;
+    public static final int CATEGORY_TABLE = 1;
+    public static final int CATEGORY_LIST = 2;
 
     private int itemType;
-    private List<String> urls;
+    private List<PhotoData> list;
 
-    public MultipleItemCategory(int itemType, List<String> ulrs) {
+    public MultipleItemCategory(int itemType, List<PhotoData> list) {
         this.itemType = itemType;
-        this.urls = ulrs;
+        this.list = list;
     }
 
-    public MultipleItemCategory(int itemType) {
-        this.itemType = itemType;
+    public List<PhotoData> getList() {
+        return list;
     }
 
-    public List<String> getUrls() {
-        return urls;
-    }
-
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
+    public void setList(List<PhotoData> list) {
+        this.list = list;
     }
 
     @Override
