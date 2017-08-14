@@ -35,7 +35,7 @@ public class CategoryAdapter extends BaseMultiItemQuickAdapter<MultipleItemCateg
                 GridLayoutManager layoutManagerTable = new GridLayoutManager(mContext, 2);
                 recyclerView.setLayoutManager(layoutManagerTable);
 
-                MultipleCategoryAdapter tableAdapter = new MultipleCategoryAdapter(R.layout.item_multiple_horizontal, MultipleItemCategory.CATEGORY_TABLE, item.getList());
+                MultipleHorAdapter tableAdapter = new MultipleHorAdapter(R.layout.item_multiple_horizontal, MultipleItemCategory.CATEGORY_TABLE, item.getList());
                 recyclerView.setAdapter(tableAdapter);
 
                 break;
@@ -44,7 +44,7 @@ public class CategoryAdapter extends BaseMultiItemQuickAdapter<MultipleItemCateg
                 layoutManagerList.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(layoutManagerList);
 
-                MultipleCategoryAdapter listAdapter = new MultipleCategoryAdapter(R.layout.item_multiple_big, MultipleItemCategory.CATEGORY_LIST, item.getList());
+                MultipleHorAdapter listAdapter = new MultipleHorAdapter(R.layout.item_multiple_big, MultipleItemCategory.CATEGORY_LIST, item.getList());
                 recyclerView.setAdapter(listAdapter);
 
                 break;

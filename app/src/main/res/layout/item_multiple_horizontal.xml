@@ -7,8 +7,8 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="8dp"
-    card_view:cardBackgroundColor="@color/white"
     android:orientation="vertical"
+    card_view:cardBackgroundColor="@color/white"
     card_view:cardCornerRadius="5dp"
     card_view:cardElevation="2dp">
 
@@ -35,6 +35,19 @@
             android:layout_margin="8dp"
             android:ellipsize="end"
             android:maxLines="1"/>
+
+        <TextView
+            android:id="@+id/tv_item_multiple_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_gold"
+            android:drawablePadding="5dp"
+            android:drawableRight="@mipmap/gold_small"
+            android:padding="2dp"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
 
     </RelativeLayout>
 
