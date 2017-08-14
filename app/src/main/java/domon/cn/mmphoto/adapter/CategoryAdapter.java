@@ -1,21 +1,18 @@
 package domon.cn.mmphoto.adapter;
 
-import android.view.View;
-import android.widget.ImageView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.data.MultipleItemCategory;
-import domon.cn.mmphoto.utils.GlideUtils;
 
 public class CategoryAdapter extends BaseMultiItemQuickAdapter<MultipleItemCategory, BaseViewHolder> {
-
-    private List<String> images;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -25,28 +22,30 @@ public class CategoryAdapter extends BaseMultiItemQuickAdapter<MultipleItemCateg
      */
     public CategoryAdapter(List<MultipleItemCategory> data) {
         super(data);
-        addItemType(MultipleItemCategory.BIG_CATEGORY, R.layout.item_multiple_horizontal);
-        addItemType(MultipleItemCategory.SMAlL_CATEGORY, R.layout.item_multiple_horizontal);
-        addItemType(MultipleItemCategory.SPLIT_LINE, R.layout.item_multiple_horizontal);
-        addItemType(MultipleItemCategory.LIST_KNOWYOU, R.layout.item_multiple_horizontal);
-
-        images = new ArrayList<>();
+        addItemType(MultipleItemCategory.CATEGORY_TABLE, R.layout.item_category);
+        addItemType(MultipleItemCategory.CATEGORY_LIST, R.layout.item_category);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, MultipleItemCategory item) {
+        RecyclerView recyclerView = helper.getView(R.id.recycler_item_category);
 
-
-        //todo change type
         switch (helper.getItemViewType()) {
-            case MultipleItemCategory.BIG_CATEGORY:
-                helper.getView(R.id.tv_item_horizontal_multiple_title).setVisibility(View.GONE);
-                helper.getView(R.id.tv_item_horizontal_multiple_more).setVisibility(View.GONE);
+            case MultipleItemCategory.CATEGORY_TABLE:
+                GridLayoutManager layoutManagerTable = new GridLayoutManager(mContext, 2);
+                recyclerView.setLayoutManager(layoutManagerTable);
 
+                MultipleCategoryAdapter tableAdapter = new MultipleCategoryAdapter(R.layout.item_multiple_horizontal, MultipleItemCategory.CATEGORY_TABLE, item.getList());
+                recyclerView.setAdapter(tableAdapter);
 
-                ImageView imageView = helper.getView(R.id.iv_item_multiple_horizontal);
+                break;
+            case MultipleItemCategory.CATEGORY_LIST:
+                LinearLayoutManager layoutManagerList = new LinearLayoutManager(mContext);
+                layoutManagerList.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(layoutManagerList);
 
-                GlideUtils.loadImageView(mContext,item.getUrls().get(1),imageView);
+                MultipleCategoryAdapter listAdapter = new MultipleCategoryAdapter(R.layout.item_multiple_big, MultipleItemCategory.CATEGORY_LIST, item.getList());
+                recyclerView.setAdapter(listAdapter);
 
                 break;
             default:

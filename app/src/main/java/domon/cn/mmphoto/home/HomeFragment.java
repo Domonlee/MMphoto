@@ -20,7 +20,7 @@ import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.HomeAdapter;
 import domon.cn.mmphoto.data.Atlas;
 import domon.cn.mmphoto.data.MultipleItemHome;
-import domon.cn.mmphoto.data.PhotoData;
+import domon.cn.mmphoto.utils.DataServer;
 
 /**
  * Created by Domon on 2017/8/9.

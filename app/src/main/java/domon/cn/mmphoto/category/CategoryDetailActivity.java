@@ -43,11 +43,10 @@ public class CategoryDetailActivity extends BaseActivity {
 
     /**
      * show input type list for more detail
-     *
-     * @param context
+     *  @param context
      * @param type    category type(1 for rosi;2 for xxx)
      */
-    public static void startActivity(Context context, int type) {
+    public static void startActivity(Context context, String type) {
         Intent intent = new Intent(context, CategoryDetailActivity.class);
         intent.putExtra(CategoryDetailActivity.CATEGORY_TYPE, type);
         context.startActivity(intent);
@@ -59,7 +58,7 @@ public class CategoryDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_category_detail);
 
         mUnbinder = ButterKnife.bind(this);
-        mTitleTv.setText(CategoryFragment.CATEGORY_ROSI);
+        mTitleTv.setText(getResources().getString(R.string.category_rosi));
         mCategoryType = getIntent().getIntExtra(CategoryDetailActivity.CATEGORY_TYPE, 1);
 
         initRecyclerView();
