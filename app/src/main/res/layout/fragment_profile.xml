@@ -209,88 +209,6 @@
                 android:background="@color/color_f0f0f0"/>
 
             <RelativeLayout
-                android:id="@+id/selfActivationLayout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/Android_5dp"
-                android:layout_marginTop="@dimen/Android_10dp"
-                android:background="@color/white"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/selfActivation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/self_activation"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/Android_10dp"
-                    android:layout_toRightOf="@id/selfActivation"
-                    android:text="自助激活"
-                    android:textColor="@color/color_676767"
-                    android:textSize="16.0sp"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/Android_10dp"
-                    app:srcCompat="@mipmap/icon_mine_right"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/Android_1dp"
-                android:layout_marginLeft="@dimen/Android_35dp"
-                android:background="@color/color_f0f0f0"/>
-
-            <RelativeLayout
-                android:id="@+id/boutiqueRecommendation"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/Android_5dp"
-                android:layout_marginTop="@dimen/Android_10dp"
-                android:background="@color/white"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/boutiqueImg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/boutique"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/Android_10dp"
-                    android:layout_toRightOf="@id/boutiqueImg"
-                    android:text="精品推荐"
-                    android:textColor="@color/color_676767"
-                    android:textSize="16.0sp"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/Android_10dp"
-                    app:srcCompat="@mipmap/icon_mine_right"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/Android_1dp"
-                android:layout_marginLeft="@dimen/Android_35dp"
-                android:background="@color/color_f0f0f0"/>
-
-            <RelativeLayout
                 android:id="@+id/mySettingsLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -313,47 +231,6 @@
                     android:layout_marginLeft="@dimen/Android_10dp"
                     android:layout_toRightOf="@id/mine_set"
                     android:text="设置"
-                    android:textColor="@color/color_676767"
-                    android:textSize="16.0sp"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/Android_10dp"
-                    app:srcCompat="@mipmap/icon_mine_right"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/Android_1dp"
-                android:layout_marginLeft="@dimen/Android_35dp"
-                android:background="@color/color_f0f0f0"/>
-
-            <RelativeLayout
-                android:id="@+id/myCustomerLayout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/Android_5dp"
-                android:layout_marginTop="@dimen/Android_10dp"
-                android:background="@color/white"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/customer_set"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/customer_qq"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/Android_10dp"
-                    android:layout_toRightOf="@id/customer_set"
-                    android:text="客服"
                     android:textColor="@color/color_676767"
                     android:textSize="16.0sp"/>
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +24,18 @@ public class ProfileFragment extends BaseFragment {
     TextView mTitleTv;
 
     @OnClick(R.id.buyGoldCoinsLayout)
-    void onClick() {
+    void onCoinClick() {
         PayForCoinActivity.startActivity(getActivity(), PayForCoinActivity.PAYFORCOIN);
     }
 
     @OnClick(R.id.openMemberLayout)
-    void onAliPayClick() {
+    void onVIPClick() {
         PayForCoinActivity.startActivity(getActivity(), PayForCoinActivity.PAYFORVIP);
+    }
+
+    @OnClick(R.id.mySettingsLayout)
+    void onSettingPayClick() {
+        Toast.makeText(getActivity(), "开发中", Toast.LENGTH_LONG).show();
     }
 
     private Unbinder mUnbinder;
