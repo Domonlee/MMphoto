@@ -40,8 +40,10 @@
 
         </activity>
 
-        <activity android:name=".album.AlbumActivity"/>
+        <activity android:name=".album.AlbumActivity"
+                  android:launchMode="singleTask" />
         <activity android:name=".profile.PayForCoinActivity"/>
+        <activity android:name=".album.PhotoViewActivity"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
