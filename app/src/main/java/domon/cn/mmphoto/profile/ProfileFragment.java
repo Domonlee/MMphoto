@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.BaseFragment;
 import domon.cn.mmphoto.R;
@@ -21,9 +22,17 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
 
+    @OnClick(R.id.buyGoldCoinsLayout)
+    void onClick() {
+        PayForCoinActivity.startActivity(getActivity(), PayForCoinActivity.PAYFORCOIN);
+    }
+
+    @OnClick(R.id.openMemberLayout)
+    void onAliPayClick() {
+        PayForCoinActivity.startActivity(getActivity(), PayForCoinActivity.PAYFORVIP);
+    }
 
     private Unbinder mUnbinder;
-
 
     public static ProfileFragment newInstance() {
 
@@ -44,7 +53,6 @@ public class ProfileFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-
 
         return view;
     }
