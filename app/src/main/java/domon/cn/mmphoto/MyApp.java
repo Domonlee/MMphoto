@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.lzy.okgo.OkGo;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 
 import okhttp3.OkHttpClient;
@@ -30,6 +31,8 @@ public class MyApp extends Application {
         super.onCreate();
         mInstance = this;
         mContext = getApplicationContext();
+
+        CrashReport.initCrashReport(getApplicationContext(), "c78918b3e2", true);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
