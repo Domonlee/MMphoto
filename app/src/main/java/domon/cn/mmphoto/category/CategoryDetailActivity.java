@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import domon.cn.mmphoto.BaseActivity;
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.MultipleHorAdapter;
@@ -28,7 +28,7 @@ import domon.cn.mmphoto.data.PhotoData;
  * Created by Domon on 2017/8/13.
  */
 
-public class CategoryDetailActivity extends AppCompatActivity {
+public class CategoryDetailActivity extends BaseActivity {
     public static final String CATEGORY_TYPE = "category_type";
 
     @BindView(R.id.title_mid_tv)

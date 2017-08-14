@@ -2,7 +2,6 @@ package domon.cn.mmphoto.profile;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import domon.cn.mmphoto.BaseFragment;
 import domon.cn.mmphoto.R;
 
 /**
  * Created by Domon on 2017/8/8.
  */
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment {
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
 
