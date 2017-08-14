@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.HomeAdapter;
+import domon.cn.mmphoto.data.Atlas;
 import domon.cn.mmphoto.data.MultipleItemHome;
 import domon.cn.mmphoto.data.PhotoData;
 
@@ -80,8 +81,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void dataSuccess(List<PhotoData> list) {
-        List<MultipleItemHome> reslut = DataServer.getMultipleItemData(list);
+    public void dataSuccess(Atlas atlas) {
+        List<MultipleItemHome> reslut = DataServer.getMultipleItemData(atlas);
         mHomeAdapter.setNewData(reslut);
     }
 

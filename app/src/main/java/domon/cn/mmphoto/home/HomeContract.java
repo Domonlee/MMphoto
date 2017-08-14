@@ -16,7 +16,7 @@ public interface HomeContract {
     interface View extends BaseView<Presenter> {
         void showEmptyError();
 
-        void dataSuccess(List<PhotoData> list);
+        void dataSuccess(Atlas list);
     }
 
     interface Presenter extends BasePresenter {

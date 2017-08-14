@@ -37,12 +37,7 @@ public class HomePresenter implements HomeContract.Presenter {
                     public void onSuccess(Response<Atlas> response) {
                         Atlas result = response.body();
                         if (result != null) {
-                            List<PhotoData> list = result.getAtlas();
-                            if (list == null) {
-                                mView.showEmptyError();
-                            } else {
-                                mView.dataSuccess(list);
-                            }
+                            mView.dataSuccess(result);
                         } else {
                             mView.showEmptyError();
                         }

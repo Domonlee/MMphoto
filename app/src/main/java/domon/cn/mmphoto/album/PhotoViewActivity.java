@@ -45,9 +45,9 @@ public class PhotoViewActivity extends AppCompatActivity {
     private Unbinder mUnbinder;
     private PhotoViewAdapter mAdapter;
     private static List<String> mPhotoUrls = new ArrayList<>();
-    private int mAlbumID;
+    private String mAlbumID;
 
-    public static void startActivity(Context context, int albumId) {
+    public static void startActivity(Context context, String albumId) {
         Intent intent = new Intent(context, PhotoViewActivity.class);
         intent.putExtra(ALBUMID, albumId);
 
@@ -61,7 +61,7 @@ public class PhotoViewActivity extends AppCompatActivity {
 
         mUnbinder = ButterKnife.bind(this);
 
-        mAlbumID = getIntent().getIntExtra(ALBUMID, 0);
+        mAlbumID = getIntent().getStringExtra(ALBUMID);
 
         reqPhotos();
 

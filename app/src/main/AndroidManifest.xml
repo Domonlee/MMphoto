@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".category.CategoryDetailActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -25,8 +25,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".category.CategoryDetailActivity">
+
+        </activity>
+
         <activity android:name=".album.AlbumActivity"/>
-        <activity android:name=".MainActivity"/>
+
 
         <meta-data android:value="59911840677baa5519001017" android:name="UMENG_APPKEY"/>
         <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>

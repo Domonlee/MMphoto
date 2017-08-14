@@ -49,96 +49,97 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<MultipleItemHome, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, final MultipleItemHome item) {
-        switch (helper.getItemViewType()) {
-            case MultipleItemHome.BANNER:
-                final Banner mBanner = helper.getView(R.id.home_banner);
-                mBanner.setImageLoader(new BannerImageLoader());
-                final List<PhotoData> banner = item.getItem();
-                for (PhotoData atlasBean : banner) {
-                    images.add(atlasBean.getAtlasImg());
-                }
+        if (item.getItem().size() > 0) {
+            helper.addOnClickListener(R.id.tv_item_horizontal_multiple_more);
 
-                mBanner.setImages(images);
-                mBanner.start();
-
-                mBanner.setOnBannerListener(new OnBannerListener() {
-                    @Override
-                    public void OnBannerClick(int position) {
-                        AlbumActivity.startActivity(mContext, banner.get(position).getAtlasID());
+            switch (helper.getItemViewType()) {
+                case MultipleItemHome.BANNER:
+                    final Banner mBanner = helper.getView(R.id.home_banner);
+                    mBanner.setImageLoader(new BannerImageLoader());
+                    final List<PhotoData> banner = item.getItem();
+                    for (PhotoData atlasBean : banner) {
+                        images.add(atlasBean.getAtlasImg());
                     }
-                });
-                break;
 
-            case MultipleItemHome.IMG_HORIZONTAL_SINGLE:
-                helper.setText(R.id.tv_item_horizontal_multiple_title, "最近更新");
-                helper.addOnClickListener(R.id.tv_item_horizontal_multiple_more);
+                    mBanner.setImages(images);
+                    mBanner.start();
 
-                RecyclerView recyclerViewSingle = helper.getView(R.id.recycler_item_top);
-                LinearLayoutManager layoutManagerSingle = new LinearLayoutManager(mContext);
-                layoutManagerSingle.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerViewSingle.setLayoutManager(layoutManagerSingle);
+                    mBanner.setOnBannerListener(new OnBannerListener() {
+                        @Override
+                        public void OnBannerClick(int position) {
+                            AlbumActivity.startActivity(mContext, banner.get(position).getAtlasID());
+                        }
+                    });
+                    break;
 
-                MultipleHorAdapter singleAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, item.getItem());
-                recyclerViewSingle.setAdapter(singleAdapter);
-                break;
+                case MultipleItemHome.IMG_HORIZONTAL_SINGLE:
+                    helper.setText(R.id.tv_item_horizontal_multiple_title, "最近更新");
 
-            case MultipleItemHome.IMG_HORIZONTAL_MULTIPLE:
-                helper.setText(R.id.tv_item_horizontal_multiple_title, "rosimm");
-                helper.addOnClickListener(R.id.tv_item_horizontal_multiple_more);
+                    RecyclerView recyclerViewSingle = helper.getView(R.id.recycler_item_top);
+                    LinearLayoutManager layoutManagerSingle = new LinearLayoutManager(mContext);
+                    layoutManagerSingle.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    recyclerViewSingle.setLayoutManager(layoutManagerSingle);
 
-                //top
-                RecyclerView recyclerViewTop = helper.getView(R.id.recycler_item_top);
-                LinearLayoutManager layoutManagerTop = new LinearLayoutManager(mContext);
-                layoutManagerTop.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerViewTop.setLayoutManager(layoutManagerTop);
+                    MultipleHorAdapter singleAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, item.getItem());
+                    recyclerViewSingle.setAdapter(singleAdapter);
+                    break;
 
-                MultipleHorAdapter horAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, item.getItem());
-                recyclerViewTop.setAdapter(horAdapter);
+                case MultipleItemHome.IMG_HORIZONTAL_MULTIPLE:
+                    helper.setText(R.id.tv_item_horizontal_multiple_title, "rosimm");
 
-                //bottom
-                RecyclerView recyclerViewBottom = helper.getView(R.id.recycler_item_bottom);
-                LinearLayoutManager layoutManagerBottom = new LinearLayoutManager(mContext);
-                layoutManagerBottom.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerViewBottom.setLayoutManager(layoutManagerBottom);
+                    //top
+                    RecyclerView recyclerViewTop = helper.getView(R.id.recycler_item_top);
+                    LinearLayoutManager layoutManagerTop = new LinearLayoutManager(mContext);
+                    layoutManagerTop.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    recyclerViewTop.setLayoutManager(layoutManagerTop);
 
-                MultipleHorAdapter verticalAdapter = new MultipleHorAdapter(R.layout.item_multiple_horizontal, item.getItem());
-                recyclerViewBottom.setAdapter(verticalAdapter);
-                break;
+                    MultipleHorAdapter horAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, item.getItem());
+                    recyclerViewTop.setAdapter(horAdapter);
 
-            case MultipleItemHome.IMG_HORIZONTAL_BIG:
-                helper.setText(R.id.tv_item_horizontal_multiple_title, "视频写真");
-                helper.addOnClickListener(R.id.tv_item_horizontal_multiple_more);
-                //top
-                RecyclerView recyclerViewBigTop = helper.getView(R.id.recycler_item_top);
-                LinearLayoutManager layoutManagerBigTop = new LinearLayoutManager(mContext);
-                layoutManagerBigTop.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerViewBigTop.setLayoutManager(layoutManagerBigTop);
+                    //bottom
+                    RecyclerView recyclerViewBottom = helper.getView(R.id.recycler_item_bottom);
+                    LinearLayoutManager layoutManagerBottom = new LinearLayoutManager(mContext);
+                    layoutManagerBottom.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    recyclerViewBottom.setLayoutManager(layoutManagerBottom);
 
-                MultipleHorAdapter bigAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, item.getItem());
-                recyclerViewBigTop.setAdapter(bigAdapter);
+                    MultipleHorAdapter verticalAdapter = new MultipleHorAdapter(R.layout.item_multiple_horizontal, item.getItem());
+                    recyclerViewBottom.setAdapter(verticalAdapter);
+                    break;
 
-                //bottom
-                RecyclerView recyclerViewBigBottom = helper.getView(R.id.recycler_item_bottom);
-                LinearLayoutManager layoutManagerBigBottom = new LinearLayoutManager(mContext);
-                layoutManagerBigBottom.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerViewBigBottom.setLayoutManager(layoutManagerBigBottom);
+                case MultipleItemHome.IMG_HORIZONTAL_BIG:
+                    helper.setText(R.id.tv_item_horizontal_multiple_title, "视频写真");
 
-                MultipleHorAdapter bigBottomAdapter = new MultipleHorAdapter(R.layout.item_multiple_big, item.getItem().subList(0, 1));
-                recyclerViewBigBottom.setAdapter(bigBottomAdapter);
+                    //top
+                    RecyclerView recyclerViewBigTop = helper.getView(R.id.recycler_item_top);
+                    LinearLayoutManager layoutManagerBigTop = new LinearLayoutManager(mContext);
+                    layoutManagerBigTop.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    recyclerViewBigTop.setLayoutManager(layoutManagerBigTop);
 
-                break;
+                    MultipleHorAdapter bigAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, item.getItem());
+                    recyclerViewBigTop.setAdapter(bigAdapter);
 
-            case MultipleItemHome.IMG_TABLE:
-                helper.setText(R.id.tv_item_horizontal_multiple_title, "热门排行");
-                helper.addOnClickListener(R.id.tv_item_horizontal_multiple_more);
+                    //bottom
+                    RecyclerView recyclerViewBigBottom = helper.getView(R.id.recycler_item_bottom);
+                    LinearLayoutManager layoutManagerBigBottom = new LinearLayoutManager(mContext);
+                    layoutManagerBigBottom.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    recyclerViewBigBottom.setLayoutManager(layoutManagerBigBottom);
 
-                RecyclerView recyclerViewTable = helper.getView(R.id.recycler_item_top);
-                StaggeredGridLayoutManager layoutManagerTable = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
-                recyclerViewTable.setLayoutManager(layoutManagerTable);
+                    MultipleHorAdapter bigBottomAdapter = new MultipleHorAdapter(R.layout.item_multiple_big, item.getItem().subList(0, 1));
+                    recyclerViewBigBottom.setAdapter(bigBottomAdapter);
+                    break;
 
-                MultipleHorAdapter tableAdapter = new MultipleHorAdapter(R.layout.item_multiple_grid, item.getItem());
-                recyclerViewTable.setAdapter(tableAdapter);
-                break;
+                case MultipleItemHome.IMG_TABLE:
+                    helper.setText(R.id.tv_item_horizontal_multiple_title, "热门排行");
+
+                    RecyclerView recyclerViewTable = helper.getView(R.id.recycler_item_top);
+                    StaggeredGridLayoutManager layoutManagerTable = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
+                    recyclerViewTable.setLayoutManager(layoutManagerTable);
+
+                    MultipleHorAdapter tableAdapter = new MultipleHorAdapter(R.layout.item_multiple_grid, item.getItem());
+                    recyclerViewTable.setAdapter(tableAdapter);
+
+                    break;
+            }
         }
     }
 }

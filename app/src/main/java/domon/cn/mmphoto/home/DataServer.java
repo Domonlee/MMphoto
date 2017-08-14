@@ -3,6 +3,7 @@ package domon.cn.mmphoto.home;
 import java.util.ArrayList;
 import java.util.List;
 
+import domon.cn.mmphoto.data.Atlas;
 import domon.cn.mmphoto.data.MultipleItemCategory;
 import domon.cn.mmphoto.data.MultipleItemHome;
 import domon.cn.mmphoto.data.PhotoData;
@@ -17,15 +18,15 @@ import domon.cn.mmphoto.data.PhotoData;
 
 public class DataServer {
 
-    public static List<MultipleItemHome> getMultipleItemData(List<PhotoData> list) {
+    public static List<MultipleItemHome> getMultipleItemData(Atlas atlas) {
         List<MultipleItemHome> result = new ArrayList<>();
-        if (list != null && list.size() > 0) {
-            result.add(new MultipleItemHome(MultipleItemHome.BANNER, list.subList(0, 5)));
-            result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_MULTIPLE, list.subList(0, 10)));
-            result.add(new MultipleItemHome(MultipleItemHome.IMG_TABLE, list.subList(0, 10)));
-            result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_SINGLE, list.subList(0, 10)));
-            result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_BIG, list.subList(0, 10)));
-        }
+
+        result.add(new MultipleItemHome(MultipleItemHome.BANNER, atlas.getBanner()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_MULTIPLE, atlas.getRose()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_TABLE, atlas.getImiss()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_SINGLE, atlas.getRose()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_BIG, atlas.getImiss()));
+
         return result;
     }
 

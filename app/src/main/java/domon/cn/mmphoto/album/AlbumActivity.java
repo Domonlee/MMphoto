@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,7 +51,7 @@ public class AlbumActivity extends AppCompatActivity {
     private Unbinder mUnbinder;
     private AlbumData mAlbumData = new AlbumData();
     private MultipleHorAdapter mAdapter;
-    private int mAlbumId;
+    private String mAlbumId;
 
     /**
      * input albumId
@@ -58,7 +59,7 @@ public class AlbumActivity extends AppCompatActivity {
      * @param context
      * @param albumId
      */
-    public static void startActivity(Context context, int albumId) {
+    public static void startActivity(Context context, String albumId) {
         Intent intent = new Intent(context, AlbumActivity.class);
         intent.putExtra(ALBUMID, albumId);
         context.startActivity(intent);
@@ -71,13 +72,16 @@ public class AlbumActivity extends AppCompatActivity {
 
         mUnbinder = ButterKnife.bind(this);
 
-        mAlbumId = getIntent().getIntExtra(ALBUMID, 0);
+        mAlbumId = getIntent().getStringExtra(ALBUMID);
 
         initRecyclerView();
 
         //todo the sub view's width is wrong
-        mAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical,mAlbumData.getRecommend());
+        mAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, mAlbumData.getRecommend());
         mRecyclerView.setAdapter(mAdapter);
+
+        if (TextUtils.isEmpty(mAlbumId)) return;
+
         reqAlbumInfo();
     }
 
