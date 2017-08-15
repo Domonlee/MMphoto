@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginTop="60dp"
+              android:background="@color/gray"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/pay_wechat_tv"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginBottom="8dp"
+        android:background="#00ac27"
+        android:drawableLeft="@mipmap/ic_launcher_round"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:text="微信"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/pay_alipay_tv"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginBottom="8dp"
+        android:background="#2dabf1"
+        android:drawableLeft="@mipmap/ic_launcher_round"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:text="支付宝"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/pay_cancle_tv"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="#b0b0b0"
+        android:text="取消支付"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+</LinearLayout>

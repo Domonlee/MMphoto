@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,9 +19,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import domon.cn.mmphoto.base.BaseActivity;
+import domon.cn.mmphoto.MyApp;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.PayCoinAdapter;
+import domon.cn.mmphoto.base.BaseActivity;
+import domon.cn.mmphoto.utils.PayDetailDialog;
+import domon.cn.mmphoto.utils.PayUtils;
 
 /**
  * Created by Domon on 2017/8/14.
@@ -69,6 +76,32 @@ public class PayForCoinActivity extends BaseActivity {
         mAdapter = new PayCoinAdapter(R.layout.item_pay, mData);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(MyApp.getAppContext(), "需要支付逻辑", Toast.LENGTH_LONG).show();
+
+                final PayDetailDialog dialog = new PayDetailDialog(PayForCoinActivity.this);
+                dialog.setListener(new PayDetailDialog.PayDetailDialogListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.pay_alipay_tv:
+                                PayUtils.payForAliPay(PayForCoinActivity.this);
+                                break;
+                            case R.id.pay_wechat_tv:
+                                PayUtils.payForWexinPay(PayForCoinActivity.this);
+                                break;
+                            case R.id.pay_cancle_tv:
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
     @Override
