@@ -7,6 +7,7 @@ import com.lzy.okgo.OkGo;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 
+import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 import okhttp3.OkHttpClient;
 
 /**
@@ -43,5 +44,7 @@ public class MyApp extends Application {
         MobclickAgent.setScenarioType(mContext, MobclickAgent.EScenarioType.E_UM_NORMAL);
         //todo debug mode must close when the app is online
         MobclickAgent.setDebugMode(true);
+
+        SharedPreferenceUtil.initPreference(this);
     }
 }

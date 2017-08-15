@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.litesuits.common.utils.TelephoneUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.yinglan.alphatabs.AlphaTabView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
 import com.yinglan.alphatabs.OnTabChangedListner;
@@ -18,10 +21,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.category.CategoryFragment;
+import domon.cn.mmphoto.data.UserProfileData;
 import domon.cn.mmphoto.home.HomeFragment;
 import domon.cn.mmphoto.profile.ProfileFragment;
 import domon.cn.mmphoto.utils.FragmentUtils;
+import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.container_fl)
@@ -50,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         unbind = ButterKnife.bind(this);
 
-        mProfileAlphaTabView.showNumber(10);
+        reqForUserId();
+
+        mProfileAlphaTabView.showPoint();
 
         mAlphaTabsIndicator.setOnTabChangedListner(new OnTabChangedListner() {
             @Override
@@ -75,6 +83,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
         initFragment(savedInstanceState);
+    }
+
+
+    /**
+     * first time send imei , second time send id
+     */
+    private void reqForUserId() {
+        final String reqUrl;
+
+        if (SharedPreferenceUtil.getIntegerValue("userID") == -1) {
+            reqUrl = Const.REQ_USER_ID + "code=" + TelephoneUtil.getIMEI(this);
+        } else {
+            reqUrl = Const.REQ_USER_ID + "id=" + SharedPreferenceUtil.getIntegerValue("userID");
+        }
+
+        OkGo.<UserProfileData>get(reqUrl)
+                .execute(new JsonCallback<UserProfileData>() {
+                    @Override
+                    public void onSuccess(Response<UserProfileData> response) {
+                        SharedPreferenceUtil.setStringValue("userCode", response.body().getUser().getUserCode());
+                        SharedPreferenceUtil.setIntegerValue("userVIPType",response.body().getUser().getVIPType());
+                        SharedPreferenceUtil.setIntegerValue("userBalance", response.body().getUser().getBalance());
+                        SharedPreferenceUtil.setIntegerValue("userID", response.body().getUser().getID());
+                    }
+                });
     }
 
     /**

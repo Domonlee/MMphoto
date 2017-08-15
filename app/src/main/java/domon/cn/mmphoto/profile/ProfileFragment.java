@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apkfuns.logutils.LogUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.BaseFragment;
 import domon.cn.mmphoto.R;
+import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 /**
  * Created by Domon on 2017/8/8.
@@ -22,6 +25,8 @@ import domon.cn.mmphoto.R;
 public class ProfileFragment extends BaseFragment {
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
+    @BindView(R.id.userName)
+    TextView mUserName;
 
     @OnClick(R.id.buyGoldCoinsLayout)
     void onCoinClick() {
@@ -59,6 +64,8 @@ public class ProfileFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mUnbinder = ButterKnife.bind(this, view);
+
+        mUserName.setText(SharedPreferenceUtil.getIntegerValue("userID") + "");
 
         return view;
     }
