@@ -94,6 +94,9 @@ public class PhotoViewActivity extends AppCompatActivity {
                         }
 
                         LogUtils.e(mPhotoUrls.size());
+                        for (int i = 0; i < mPhotoUrls.size(); i++) {
+                            LogUtils.e(mPhotoUrls.get(i));
+                        }
                         mAdapter.setUrls(mPhotoUrls);
                     }
                 });

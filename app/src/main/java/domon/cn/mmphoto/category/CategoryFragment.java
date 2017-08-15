@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import domon.cn.mmphoto.BaseFragment;
+import domon.cn.mmphoto.base.BaseFragment;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.CategoryAdapter;
 import domon.cn.mmphoto.data.MultipleItemCategory;

@@ -1,7 +1,7 @@
 package domon.cn.mmphoto.home;
 
-import domon.cn.mmphoto.BasePresenter;
-import domon.cn.mmphoto.BaseView;
+import domon.cn.mmphoto.base.BasePresenter;
+import domon.cn.mmphoto.base.BaseView;
 import domon.cn.mmphoto.data.Atlas;
 
 /**

@@ -2,8 +2,8 @@ package domon.cn.mmphoto.category;
 
 import java.util.List;
 
-import domon.cn.mmphoto.BasePresenter;
-import domon.cn.mmphoto.BaseView;
+import domon.cn.mmphoto.base.BasePresenter;
+import domon.cn.mmphoto.base.BaseView;
 import domon.cn.mmphoto.data.PhotoData;
 
 /**

@@ -1,6 +1,6 @@
-package domon.cn.mmphoto;
+package domon.cn.mmphoto.base;
 
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -8,14 +8,15 @@ import com.umeng.analytics.MobclickAgent;
  * Created by Domon on 2017/8/14.
  */
 
-public class BaseFragment extends Fragment {
+public class BaseActivity extends AppCompatActivity{
+
     public void onResume() {
         super.onResume();
-        MobclickAgent.onResume(getActivity());
+        MobclickAgent.onResume(this);
     }
 
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(getActivity());
+        MobclickAgent.onPause(this);
     }
 }

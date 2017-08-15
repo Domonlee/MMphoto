@@ -1,4 +1,4 @@
-package domon.cn.mmphoto;
+package domon.cn.mmphoto.base;
 
 /**
  * Created by Domon on 2017/8/8.
