@@ -42,19 +42,16 @@ public class MultipleHorAdapter extends BaseQuickAdapter<PhotoData, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, final PhotoData item) {
         helper.setText(R.id.tv_item_multiple_horizontal, item.getAtlasTitle());
-        helper.setText(R.id.tv_item_multiple_gold, "100");
+        helper.setText(R.id.tv_item_multiple_gold, item.getAtlasCost()+"");
 
         ImageView imageView = helper.getView(R.id.iv_item_multiple_horizontal);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (type == MultipleItemCategory.CATEGORY_TABLE) {
-                    CategoryDetailActivity.startActivity(mContext, item.getAtlasType());
-                } else if (type == MultipleItemCategory.CATEGORY_LIST) {
-                    AlbumActivity.startActivity(mContext, item.getAtlasID());
-                } else {
-                    AlbumActivity.startActivity(mContext, item.getAtlasID());
-                }
+        imageView.setOnClickListener(v -> {
+            if (type == MultipleItemCategory.CATEGORY_TABLE) {
+                CategoryDetailActivity.startActivity(mContext, item.getAtlasType());
+            } else if (type == MultipleItemCategory.CATEGORY_LIST) {
+                AlbumActivity.startActivity(mContext, item.getAtlasID());
+            } else {
+                AlbumActivity.startActivity(mContext, item.getAtlasID());
             }
         });
         GlideUtils.loadImageView(mContext, item.getAtlasImg(), imageView);

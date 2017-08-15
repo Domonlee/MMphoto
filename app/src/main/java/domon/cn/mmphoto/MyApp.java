@@ -33,7 +33,7 @@ public class MyApp extends Application {
         mInstance = this;
         mContext = getApplicationContext();
 
-        CrashReport.initCrashReport(getApplicationContext(), "c78918b3e2", true);
+//        CrashReport.initCrashReport(getApplicationContext(), "c78918b3e2", true);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
