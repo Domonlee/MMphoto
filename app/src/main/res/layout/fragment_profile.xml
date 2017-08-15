@@ -84,7 +84,7 @@
                         android:paddingLeft="15.0dip"
                         android:paddingRight="15.0dip"
                         android:paddingTop="5.0dip"
-                        android:text="打赏"
+                        android:text="金币余额:"
                         android:textColor="@color/white"
                         android:textSize="16.0sp"/>
                 </RelativeLayout>

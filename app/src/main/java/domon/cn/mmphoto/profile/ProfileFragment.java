@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.apkfuns.logutils.LogUtils;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,7 +24,9 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
     @BindView(R.id.userName)
-    TextView mUserName;
+    TextView mUserNameTv;
+    @BindView(R.id.openVip)
+    TextView mBalanceTv;
 
     @OnClick(R.id.buyGoldCoinsLayout)
     void onCoinClick() {
@@ -65,7 +65,9 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
-        mUserName.setText(SharedPreferenceUtil.getIntegerValue("userID") + "");
+        mUserNameTv.setText(SharedPreferenceUtil.getIntegerValue("userID") + "");
+        mBalanceTv.setText(mBalanceTv.getText().toString() +
+                SharedPreferenceUtil.getIntegerValue("userBalance"));
 
         return view;
     }
