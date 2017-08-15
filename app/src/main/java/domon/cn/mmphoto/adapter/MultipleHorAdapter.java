@@ -49,7 +49,7 @@ public class MultipleHorAdapter extends BaseQuickAdapter<PhotoData, BaseViewHold
             @Override
             public void onClick(View v) {
                 if (type == MultipleItemCategory.CATEGORY_TABLE) {
-                    CategoryDetailActivity.startActivity(mContext, item.getAtlasID());
+                    CategoryDetailActivity.startActivity(mContext, item.getAtlasType());
                 } else if (type == MultipleItemCategory.CATEGORY_LIST) {
                     AlbumActivity.startActivity(mContext, item.getAtlasID());
                 } else {

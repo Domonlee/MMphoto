@@ -23,6 +23,7 @@ import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.MultipleHorAdapter;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.AlbumData;
+import domon.cn.mmphoto.data.MultipleItemCategory;
 import domon.cn.mmphoto.utils.GlideUtils;
 
 /**
@@ -77,12 +78,12 @@ public class AlbumActivity extends AppCompatActivity {
         initRecyclerView();
 
         //todo the sub view's width is wrong
-        mAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, mAlbumData.getRecommend());
+        mAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, MultipleItemCategory.CATEGORY_TABLE, mAlbumData.getRecommend());
         mRecyclerView.setAdapter(mAdapter);
 
         if (TextUtils.isEmpty(mAlbumId)) return;
 
-        reqAlbumInfo();
+        reqAlbumInfo(mAlbumId);
     }
 
     private void initRecyclerView() {
@@ -91,8 +92,8 @@ public class AlbumActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
-    private void reqAlbumInfo() {
-        String reqUrl = Const.REQ_ALBUM_WITH_ID + mAlbumId;
+    private void reqAlbumInfo(String albumId) {
+        String reqUrl = Const.REQ_ALBUM_WITH_ID + albumId;
 
         OkGo.<AlbumData>get(reqUrl)
                 .execute(new JsonCallback<AlbumData>() {

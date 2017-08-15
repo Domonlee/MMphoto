@@ -8,18 +8,21 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.apkfuns.logutils.LogUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import domon.cn.mmphoto.base.BaseActivity;
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.MultipleHorAdapter;
+import domon.cn.mmphoto.base.BaseActivity;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.CategoryDetailData;
 import domon.cn.mmphoto.data.PhotoData;
@@ -40,13 +43,15 @@ public class CategoryDetailActivity extends BaseActivity {
 
     private Unbinder mUnbinder;
     private int mCategoryType;
+    private List<String> mTitleList = Arrays.asList("ROSI肉丝", "IMISS爱蜜社", "BoLoli波萝社", "MiiTao蜜桃社", "推女神");
 
     /**
      * show input type list for more detail
-     *  @param context
-     * @param type    category type(1 for rosi;2 for xxx)
+     *
+     * @param context
+     * @param type
      */
-    public static void startActivity(Context context, String type) {
+    public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, CategoryDetailActivity.class);
         intent.putExtra(CategoryDetailActivity.CATEGORY_TYPE, type);
         context.startActivity(intent);
@@ -58,8 +63,8 @@ public class CategoryDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_category_detail);
 
         mUnbinder = ButterKnife.bind(this);
-        mTitleTv.setText(getResources().getString(R.string.category_rosi));
         mCategoryType = getIntent().getIntExtra(CategoryDetailActivity.CATEGORY_TYPE, 1);
+        mTitleTv.setText(mTitleList.get(mCategoryType - 1));
 
         initRecyclerView();
         reqCategoryDetail();
@@ -79,7 +84,7 @@ public class CategoryDetailActivity extends BaseActivity {
                 .execute(new JsonCallback<CategoryDetailData>() {
                     @Override
                     public void onSuccess(Response<CategoryDetailData> response) {
-                        mAdapter.setNewData(response.body().getAtlas().get(mCategoryType - 1).getAtlasList());
+                        mAdapter.setNewData(response.body().getAtlas().get(0).getAtlasList());
                     }
                 });
     }
