@@ -1,5 +1,6 @@
 package domon.cn.mmphoto;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.litesuits.common.utils.TelephoneUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yinglan.alphatabs.AlphaTabView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
 import com.yinglan.alphatabs.OnTabChangedListner;
@@ -56,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         unbind = ButterKnife.bind(this);
 
-        reqForUserId();
-
         mProfileAlphaTabView.showPoint();
 
         mAlphaTabsIndicator.setOnTabChangedListner(new OnTabChangedListner() {
@@ -83,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         initFragment(savedInstanceState);
+
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
+        .subscribe(granted->{
+            if(granted){
+                reqForUserId();
+            }
+        });
     }
 
 
