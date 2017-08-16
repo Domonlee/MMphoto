@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -19,7 +18,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import domon.cn.mmphoto.MyApp;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.PayCoinAdapter;
 import domon.cn.mmphoto.base.BaseActivity;
@@ -80,7 +78,6 @@ public class PayForCoinActivity extends BaseActivity {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(MyApp.getAppContext(), "需要支付逻辑", Toast.LENGTH_LONG).show();
 
                 final PayDetailDialog dialog = new PayDetailDialog(PayForCoinActivity.this);
                 dialog.setListener(new PayDetailDialog.PayDetailDialogListener() {
@@ -88,10 +85,18 @@ public class PayForCoinActivity extends BaseActivity {
                     public void onClick(View view) {
                         switch (view.getId()) {
                             case R.id.pay_alipay_tv:
-                                PayUtils.payForAliPay(PayForCoinActivity.this);
+                                if (mActionType == PAYFORCOIN) {
+                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_COIN, PayUtils.PAY_CHANNLE_ALIPAY);
+                                } else {
+                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_QUARTER + position, PayUtils.PAY_CHANNLE_ALIPAY);
+                                }
                                 break;
                             case R.id.pay_wechat_tv:
-                                PayUtils.payForWexinPay(PayForCoinActivity.this);
+                                if (mActionType == PAYFORCOIN) {
+                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_COIN, PayUtils.PAY_CHANNLE_WETCHAT);
+                                } else {
+                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_QUARTER + position, PayUtils.PAY_CHANNLE_WETCHAT);
+                                }
                                 break;
                             case R.id.pay_cancle_tv:
                                 dialog.dismiss();

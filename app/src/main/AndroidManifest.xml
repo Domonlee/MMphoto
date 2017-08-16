@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <!-- bugly -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -43,6 +44,7 @@
         <activity android:name=".album.AlbumActivity"/>
         <activity android:name=".profile.PayForCoinActivity"/>
         <activity android:name=".album.PhotoViewActivity"/>
+        <activity android:name="com.tencent.mm.ui.LauncherUII"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
