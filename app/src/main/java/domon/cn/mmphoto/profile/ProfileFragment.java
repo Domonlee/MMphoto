@@ -21,7 +21,6 @@ import domon.cn.mmphoto.utils.SharedPreferenceUtil;
  */
 
 public class ProfileFragment extends BaseFragment implements ProfileContract.View {
-    // TODO: 2017/8/16 add refresh balance
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
     @BindView(R.id.userName)
