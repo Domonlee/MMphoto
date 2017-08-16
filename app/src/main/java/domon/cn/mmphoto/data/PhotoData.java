@@ -6,17 +6,6 @@ package domon.cn.mmphoto.data;
 
 public class PhotoData {
 
-
-    /**
-     * ID : 12
-     * AtlasID : 2326
-     * AtlasTitle : ROSI写真No.2073 黑色连体开档皮衣翘臀
-     * AtlasImg : http://uuu.shafa5.com/ros/2326/2073.jpg
-     * AtlasToUrl : http://www.rosmm.com/rosimm/2017/08/10/2326.htm
-     * AtlasCost : 20
-     * AtlasType : 1
-     */
-
     private int ID;
     private String AtlasID;
     private String AtlasTitle;
@@ -24,6 +13,7 @@ public class PhotoData {
     private String AtlasToUrl;
     private int AtlasCost;
     private int AtlasType;
+    private int AtlasPaid;
 
     public int getID() {
         return ID;
@@ -79,5 +69,13 @@ public class PhotoData {
 
     public void setAtlasType(int AtlasType) {
         this.AtlasType = AtlasType;
+    }
+
+    public int getAtlasPaid() {
+        return AtlasPaid;
+    }
+
+    public void setAtlasPaid(int AtlasPaid) {
+        this.AtlasPaid = AtlasPaid;
     }
 }

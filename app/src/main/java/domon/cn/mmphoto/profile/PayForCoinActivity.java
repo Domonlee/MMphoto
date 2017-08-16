@@ -86,16 +86,16 @@ public class PayForCoinActivity extends BaseActivity {
                         switch (view.getId()) {
                             case R.id.pay_alipay_tv:
                                 if (mActionType == PAYFORCOIN) {
-                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_COIN, PayUtils.PAY_CHANNLE_ALIPAY);
+                                    PayUtils.payInit(PayForCoinActivity.this,position + 1, PayUtils.PAY_TYPE_COIN, PayUtils.PAY_CHANNLE_ALIPAY);
                                 } else {
-                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_QUARTER + position, PayUtils.PAY_CHANNLE_ALIPAY);
+                                    PayUtils.payInit(PayForCoinActivity.this, position + 1, PayUtils.PAY_TYPE_QUARTER + position, PayUtils.PAY_CHANNLE_ALIPAY);
                                 }
                                 break;
                             case R.id.pay_wechat_tv:
                                 if (mActionType == PAYFORCOIN) {
-                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_COIN, PayUtils.PAY_CHANNLE_WETCHAT);
+                                    PayUtils.payInit(PayForCoinActivity.this, position + 1, PayUtils.PAY_TYPE_COIN, PayUtils.PAY_CHANNLE_WETCHAT);
                                 } else {
-                                    PayUtils.payInit(position + 1, PayUtils.PAY_TYPE_QUARTER + position, PayUtils.PAY_CHANNLE_WETCHAT);
+                                    PayUtils.payInit(PayForCoinActivity.this,position + 1, PayUtils.PAY_TYPE_QUARTER + position, PayUtils.PAY_CHANNLE_WETCHAT);
                                 }
                                 break;
                             case R.id.pay_cancle_tv:

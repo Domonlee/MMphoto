@@ -1,5 +1,7 @@
 package domon.cn.mmphoto.utils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -13,6 +15,7 @@ import com.apkfuns.logutils.LogUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.Response;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,7 +39,7 @@ public class PayUtils {
     public static void payForWexinPay(Context context) {
         // TODO: 2017/8/14 目前已经失效，需要重新设置流程
         Intent intent = new Intent();
-        ComponentName cmp=new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+        ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -61,25 +64,35 @@ public class PayUtils {
     /**
      * Init pay
      *
+     * @param act
      * @param payCode    1:"50000金币,￥58元";2:"8000金币,￥38元";3:"4000金币,￥26元";4:"2000金币,￥18元";5:"40金币,￥3元
      * @param payType    1:金币支付 2:年度会员 3:季度会员(当传入2，3时，payCode参数不做处理)
      * @param payChannel 1:微富通微信支付 2:微富通支付宝支付 3:知名短代
      */
-    public static void payInit(int payCode, int payType, int payChannel) {
+    public static void payInit(Activity act,int payCode, int payType, int payChannel) {
         String reqUrl = Const.REQ_PAY_IMG + "&payCode=" + payCode + "&payType=" + payType + "&payChannel=" + payChannel;
-        LogUtils.e(reqUrl);
-        OkGo.<PayResultData>get(reqUrl)
-                .execute(new JsonCallback<PayResultData>() {
-                    @Override
-                    public void onSuccess(Response<PayResultData> response) {
-                        LogUtils.e(response.body());
-                        downloadPic(response.body().getCode_img_url(), response.body().getAppid() + ".jpg"
-                        ,payChannel);
+
+        RxPermissions rxPermissions = new RxPermissions(act);
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(grant -> {
+                    if (grant) {
+                        LogUtils.e(reqUrl);
+                        OkGo.<PayResultData>get(reqUrl)
+                                .execute(new JsonCallback<PayResultData>() {
+                                    @Override
+                                    public void onSuccess(Response<PayResultData> response) {
+                                        LogUtils.e(response.body());
+                                        downloadPic(response.body().getCode_img_url(), response.body().getAppid() + ".jpg"
+                                                , payChannel);
+                                    }
+                                });
                     }
                 });
+
+
     }
 
-    private static void downloadPic(String url, String fileName,int payChannel) {
+    private static void downloadPic(String url, String fileName, int payChannel) {
         String path = Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_PICTURES + "/";
         LogUtils.e("download path=" + path + fileName);
 
@@ -97,12 +110,9 @@ public class PayUtils {
                             e.printStackTrace();
                         }
 
-                        if (payChannel == PAY_CHANNLE_ALIPAY)
-                        {
+                        if (payChannel == PAY_CHANNLE_ALIPAY) {
                             PayUtils.payForAliPay(MyApp.getAppContext());
-                        }
-                        else if (payChannel == PAY_CHANNLE_WETCHAT)
-                        {
+                        } else if (payChannel == PAY_CHANNLE_WETCHAT) {
                             PayUtils.payForWexinPay(MyApp.getAppContext());
                         }
                     }
