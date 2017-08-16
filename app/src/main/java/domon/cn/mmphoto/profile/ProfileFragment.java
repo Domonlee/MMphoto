@@ -12,15 +12,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import domon.cn.mmphoto.base.BaseFragment;
 import domon.cn.mmphoto.R;
+import domon.cn.mmphoto.base.BaseFragment;
 import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 /**
  * Created by Domon on 2017/8/8.
  */
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileFragment extends BaseFragment implements ProfileContract.View {
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
     @BindView(R.id.userName)
@@ -44,6 +44,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private Unbinder mUnbinder;
+    private ProfileContract.Presenter mPresenter;
 
     public static ProfileFragment newInstance() {
 
@@ -57,6 +58,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new ProfilePresenter(this);
     }
 
     @Nullable
@@ -66,9 +68,10 @@ public class ProfileFragment extends BaseFragment {
         mUnbinder = ButterKnife.bind(this, view);
 
         mUserNameTv.setText(SharedPreferenceUtil.getIntegerValue("userID") + "");
-        mBalanceTv.setText(mBalanceTv.getText().toString() +
+        mBalanceTv.setText("金币余额:" +
                 SharedPreferenceUtil.getIntegerValue("userBalance"));
 
+        mPresenter.requestUserProfileData();
         return view;
     }
 
@@ -76,5 +79,28 @@ public class ProfileFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.requestUserProfileData();
+    }
+
+    @Override
+    public void setPresenter(ProfileContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showEmptyError() {
+
+    }
+
+    @Override
+    public void updateBalance(int balance) {
+        SharedPreferenceUtil.setIntegerValue("userBalance", balance);
+        mBalanceTv.setText("金币余额:" +
+                SharedPreferenceUtil.getIntegerValue("userBalance"));
     }
 }

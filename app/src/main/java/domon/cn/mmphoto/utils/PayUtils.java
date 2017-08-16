@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -19,6 +21,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.MyApp;
@@ -37,14 +40,17 @@ public class PayUtils {
     public static final int PAY_TYPE_YEAR = 3;
 
     public static void payForWexinPay(Context context) {
-        // TODO: 2017/8/14 目前已经失效，需要重新设置流程
-        Intent intent = new Intent();
-        ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setComponent(cmp);
-        context.startActivity(intent);
+        if (isWeixinAvilible(context)) {
+            Intent intent = new Intent();
+            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+            intent.setAction(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setComponent(cmp);
+            context.startActivity(intent);
+        } else {
+            Toast.makeText(context, "无法跳转到微信，请检查您是否安装了微信！", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void payForAliPay(Context context) {
@@ -69,7 +75,7 @@ public class PayUtils {
      * @param payType    1:金币支付 2:年度会员 3:季度会员(当传入2，3时，payCode参数不做处理)
      * @param payChannel 1:微富通微信支付 2:微富通支付宝支付 3:知名短代
      */
-    public static void payInit(Activity act,int payCode, int payType, int payChannel) {
+    public static void payInit(Activity act, int payCode, int payType, int payChannel) {
         String reqUrl = Const.REQ_PAY_IMG + "&payCode=" + payCode + "&payType=" + payType + "&payChannel=" + payChannel;
 
         RxPermissions rxPermissions = new RxPermissions(act);
@@ -88,8 +94,6 @@ public class PayUtils {
                                 });
                     }
                 });
-
-
     }
 
     private static void downloadPic(String url, String fileName, int payChannel) {
@@ -123,5 +127,19 @@ public class PayUtils {
                         LogUtils.e(response.body());
                     }
                 });
+    }
+
+    public static boolean isWeixinAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
