@@ -15,5 +15,6 @@ public class Const {
     public static final String REQ_CATEGORY_WITH_TYPE = BASE_URL + "GetAtlasByType.ashx?type=";
 
     // first time, +imei=xxxx; second time , +id = yyy;
-    public static final String REQ_USER_ID = BASE_URL + "/pay/GetUserInfo.ashx?";
+    public static final String REQ_USER_ID = BASE_URL + "pay/GetUserInfo.ashx?";
+    public static final String REQ_PAY_IMG = BASE_URL + "pay/requestpay.ashx?";
 }
