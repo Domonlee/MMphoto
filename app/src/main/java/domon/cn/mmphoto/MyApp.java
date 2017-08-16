@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.lzy.okgo.OkGo;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.lzy.okgo.model.HttpParams;
 import com.umeng.analytics.MobclickAgent;
 
 import domon.cn.mmphoto.utils.SharedPreferenceUtil;
@@ -34,17 +34,22 @@ public class MyApp extends Application {
         mContext = getApplicationContext();
 
 //        CrashReport.initCrashReport(getApplicationContext(), "c78918b3e2", true);
+        SharedPreferenceUtil.initPreference(this);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
+        HttpParams params = new HttpParams();
+        params.put("userId", SharedPreferenceUtil.getIntegerValue("userID"));
+
         OkGo.getInstance().init(this)
                 .setOkHttpClient(builder.build())
+                .addCommonParams(params)
                 .setRetryCount(3);
 
         MobclickAgent.setScenarioType(mContext, MobclickAgent.EScenarioType.E_UM_NORMAL);
         //todo debug mode must close when the app is online
         MobclickAgent.setDebugMode(true);
 
-        SharedPreferenceUtil.initPreference(this);
+
     }
 }
