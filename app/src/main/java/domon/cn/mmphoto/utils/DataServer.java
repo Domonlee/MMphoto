@@ -1,9 +1,21 @@
 package domon.cn.mmphoto.utils;
 
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.github.chrisbanes.photoview.PhotoView;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.data.Atlas;
+import domon.cn.mmphoto.data.ImageList;
 import domon.cn.mmphoto.data.MultipleItemCategory;
 import domon.cn.mmphoto.data.MultipleItemHome;
 import domon.cn.mmphoto.data.PhotoData;
@@ -30,37 +42,60 @@ public class DataServer {
         return result;
     }
 
-    public static List<MultipleItemCategory> getMultipleCategoryItemData(List<PhotoData> list){
+    public static List<MultipleItemCategory> getMultipleCategoryItemData(List<PhotoData> list) {
         List<MultipleItemCategory> result = new ArrayList<>();
 
         List<PhotoData> categoryList = new ArrayList<>();
         PhotoData item = new PhotoData();
-        item.setAtlasID(1+"");
+        item.setAtlasID(1 + "");
         item.setAtlasTitle("冷艳尤物");
         categoryList.add(item);
 
         item = new PhotoData();
-        item.setAtlasID(2+"");
+        item.setAtlasID(2 + "");
         item.setAtlasTitle("可爱萌妹");
         categoryList.add(item);
 
         item = new PhotoData();
-        item.setAtlasID(3+"");
+        item.setAtlasID(3 + "");
         item.setAtlasTitle("极品身材");
         categoryList.add(item);
 
         item = new PhotoData();
-        item.setAtlasID(4+"");
+        item.setAtlasID(4 + "");
         item.setAtlasTitle("唯美清新");
         categoryList.add(item);
 
-        result.add(new MultipleItemCategory(MultipleItemCategory.CATEGORY_TABLE,categoryList));
+        result.add(new MultipleItemCategory(MultipleItemCategory.CATEGORY_TABLE, categoryList));
 
         if (list != null && list.size() > 0) {
-            result.add(new MultipleItemCategory(MultipleItemCategory.CATEGORY_LIST,list));
+            result.add(new MultipleItemCategory(MultipleItemCategory.CATEGORY_LIST, list));
         }
 
         return result;
 
+    }
+
+
+    public static List<View> getImageViews(Context mContext, List<ImageList.ImglistBean> list) {
+        List<View> views = new ArrayList<>();
+        if (list != null && list.size() > 0) {
+            for (ImageList.ImglistBean item : list) {
+                PhotoView photoView = new PhotoView(mContext);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                photoView.setLayoutParams(layoutParams);
+                Glide.with(mContext)
+                        .load(item.getImgUrl())
+                        .placeholder(R.mipmap.album_background)
+                        .into(new SimpleTarget<GlideDrawable>() {
+                            @Override
+                            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                                photoView.setImageDrawable(resource);
+                            }
+                        });
+                views.add(photoView);
+            }
+        }
+        return views;
     }
 }

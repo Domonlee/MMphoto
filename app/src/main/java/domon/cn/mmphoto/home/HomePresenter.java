@@ -3,12 +3,9 @@ package domon.cn.mmphoto.home;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
-import java.util.List;
-
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.Atlas;
-import domon.cn.mmphoto.data.PhotoData;
 
 /**
  * Created by Domon on 2017/8/9.

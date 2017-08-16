@@ -4,19 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
-import com.apkfuns.logutils.LogUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,6 +19,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
+import domon.cn.mmphoto.callback.JsonCallback;
+import domon.cn.mmphoto.data.ImageList;
+import domon.cn.mmphoto.utils.DataServer;
 
 /**
  * Created by Domon on 2017/8/10.
@@ -36,22 +33,21 @@ public class PhotoViewActivity extends AppCompatActivity {
     PhotoViewPager mPhotoViewPager;
     @BindView(R.id.photo_position_tv)
     TextView mPhotoPositionTv;
-
-    @OnClick(R.id.photo_download_iv)
-    void onDownloadClick() {
-        //todo download pic
-    }
-
     private Unbinder mUnbinder;
-    private PhotoViewAdapter mAdapter;
-    private static List<String> mPhotoUrls = new ArrayList<>();
     private String mAlbumID;
+    private PhotoViewAdapter mAdapter;
+    private List<View> mViews;
 
     public static void startActivity(Context context, String albumId) {
         Intent intent = new Intent(context, PhotoViewActivity.class);
         intent.putExtra(ALBUMID, albumId);
 
         context.startActivity(intent);
+    }
+
+    @OnClick(R.id.photo_download_iv)
+    void onDownloadClick() {
+        //todo download pic
     }
 
     @Override
@@ -65,39 +61,35 @@ public class PhotoViewActivity extends AppCompatActivity {
 
         reqPhotos();
 
-        mAdapter = new PhotoViewAdapter(mPhotoUrls, this);
-        mPhotoViewPager.setAdapter(mAdapter);
-//        mPhotoViewPager.setCurrentItem();
-
-        mPhotoViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                //currentPositon = position;
-            }
-        });
+//        mAdapter = new PhotoViewAdapter(mPhotoUrls, this);
+//        mPhotoViewPager.setAdapter(mAdapter);
+////        mPhotoViewPager.setCurrentItem();
+//
+//        mPhotoViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                //currentPositon = position;
+//            }
+//        });
     }
 
     private void reqPhotos() {
         final String reqUrl = Const.REQ_IMGLIST_WITH_ID + mAlbumID;
 
-        OkGo.<String>get(reqUrl)
-                .execute(new StringCallback() {
+        OkGo.<ImageList>get(reqUrl)
+                .execute(new JsonCallback<ImageList>() {
                     @Override
-                    public void onSuccess(Response<String> response) {
+                    public void onSuccess(Response<ImageList> response) {
+                        ImageList body = response.body();
+                        if (body != null) {
+                            List<ImageList.ImglistBean> list = body.getImglist();
+                            mViews = DataServer.getImageViews(PhotoViewActivity.this, list);
 
-                        JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
-                        JsonArray jsonArray = jsonObject.getAsJsonArray("imglist");
+                            mAdapter = new PhotoViewAdapter(mViews);
+                            mPhotoViewPager.setAdapter(mAdapter);
 
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            mPhotoUrls.add(i, jsonArray.get(i).getAsJsonObject().get("ImgUrl").toString());
                         }
-
-                        LogUtils.e(mPhotoUrls.size());
-                        for (int i = 0; i < mPhotoUrls.size(); i++) {
-                            LogUtils.e(mPhotoUrls.get(i));
-                        }
-                        mAdapter.setUrls(mPhotoUrls);
                     }
                 });
     }

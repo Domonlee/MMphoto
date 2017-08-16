@@ -17,5 +17,11 @@ public class Const {
     // first time, +imei=xxxx; second time , +id = yyy;
     public static final String REQ_USER_ID = BASE_URL + "pay/GetUserInfo.ashx?";
     public static final String REQ_PAY_IMG = BASE_URL + "pay/requestpay.ashx?";
+    public static final String REQ_BUY_ALBUM = BASE_URL + "pay/requestpurchase.ashx";
+
+
     public static final int PAY_YET = 1;
+
+    public static final int BUY_SUCESS = 0;
+    public static final int BUY_YET = 1;
 }

@@ -23,8 +23,10 @@ import butterknife.Unbinder;
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.MultipleHorAdapter;
+import domon.cn.mmphoto.callback.DialogCallback;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.AlbumData;
+import domon.cn.mmphoto.data.BuyAlbumRep;
 import domon.cn.mmphoto.data.MultipleItemCategory;
 import domon.cn.mmphoto.data.PhotoData;
 import domon.cn.mmphoto.profile.PayForCoinActivity;
@@ -38,17 +40,28 @@ import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 public class AlbumActivity extends AppCompatActivity {
 
     public static final String ALBUMID = "albumId";
-    private Unbinder mUnbinder;
-    private AlbumData mAlbumData = new AlbumData();
-    private MultipleHorAdapter mAdapter;
-    private String mAlbumId;
-
     @BindView(R.id.albumtitle_mid_tv)
     TextView mTitleTv;
     @BindView(R.id.album_more_rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.album_main_iv)
     ImageView mAlbumMainIv;
+    private Unbinder mUnbinder;
+    private AlbumData mAlbumData = new AlbumData();
+    private MultipleHorAdapter mAdapter;
+    private String mAlbumId;
+
+    /**
+     * input albumId
+     *
+     * @param context
+     * @param albumId
+     */
+    public static void startActivity(Context context, String albumId) {
+        Intent intent = new Intent(context, AlbumActivity.class);
+        intent.putExtra(ALBUMID, albumId);
+        context.startActivity(intent);
+    }
 
     @OnClick(R.id.albumtitle_left_iv)
     void onBackClick() {
@@ -72,6 +85,7 @@ public class AlbumActivity extends AppCompatActivity {
                             .negativeText("再考虑一下")
                             .onPositive((dialog, which) -> {
                                 //消费金币
+                                requestPurchase(photoData.getID() + "");
                             })
                             .show();
                 } else {
@@ -88,23 +102,30 @@ public class AlbumActivity extends AppCompatActivity {
                 }
             }
         } else {
-            Toast.makeText(this, "数据在误,请刷新重试", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "数据有误,请稍后重试", Toast.LENGTH_SHORT).show();
         }
 
 
     }
 
+    private void requestPurchase(String atlasID) {
+        OkGo.<BuyAlbumRep>get(Const.REQ_BUY_ALBUM)
+                .params("id", atlasID)
+                .execute(new DialogCallback<BuyAlbumRep>(AlbumActivity.this) {
+                    @Override
+                    public void onSuccess(Response<BuyAlbumRep> response) {
+                        reqAlbumInfo(mAlbumId);
 
-    /**
-     * input albumId
-     *
-     * @param context
-     * @param albumId
-     */
-    public static void startActivity(Context context, String albumId) {
-        Intent intent = new Intent(context, AlbumActivity.class);
-        intent.putExtra(ALBUMID, albumId);
-        context.startActivity(intent);
+                        BuyAlbumRep resp = response.body();
+                        if (resp != null) {
+                            if (resp.getStatus() >= 100) {
+                                Toast.makeText(AlbumActivity.this, resp.getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                PhotoViewActivity.startActivity(AlbumActivity.this, atlasID);
+                            }
+                        }
+                    }
+                });
     }
 
     @Override
