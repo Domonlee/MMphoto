@@ -86,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
 
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
-        .subscribe(granted->{
-            if(granted){
-                reqForUserId();
-            }
-        });
+                .subscribe(granted -> {
+                    if (granted) {
+                        reqForUserId();
+                    }
+                });
     }
 
 
@@ -110,10 +110,13 @@ public class MainActivity extends AppCompatActivity {
                 .execute(new JsonCallback<UserProfileData>() {
                     @Override
                     public void onSuccess(Response<UserProfileData> response) {
-                        SharedPreferenceUtil.setStringValue("userCode", response.body().getUser().getUserCode());
-                        SharedPreferenceUtil.setIntegerValue("userVIPType",response.body().getUser().getVIPType());
-                        SharedPreferenceUtil.setIntegerValue("userBalance", response.body().getUser().getBalance());
-                        SharedPreferenceUtil.setIntegerValue("userID", response.body().getUser().getID());
+                        UserProfileData user = response.body();
+                        if (user != null) {
+                            SharedPreferenceUtil.setStringValue("userCode", user.getUser().getUserCode());
+                            SharedPreferenceUtil.setIntegerValue("userVIPType", user.getUser().getVIPType());
+                            SharedPreferenceUtil.setIntegerValue("userBalance", user.getUser().getBalance());
+                            SharedPreferenceUtil.setIntegerValue("userID", user.getUser().getID());
+                        }
                     }
                 });
     }

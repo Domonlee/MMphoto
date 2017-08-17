@@ -2,9 +2,9 @@ package domon.cn.mmphoto.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -42,7 +42,8 @@ public class MultipleHorAdapter extends BaseQuickAdapter<PhotoData, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, final PhotoData item) {
         helper.setText(R.id.tv_item_multiple_horizontal, item.getAtlasTitle());
-        helper.setText(R.id.tv_item_multiple_gold, item.getAtlasCost()+"");
+        helper.setText(R.id.tv_item_multiple_gold, item.getAtlasCost() + "");
+
 
         ImageView imageView = helper.getView(R.id.iv_item_multiple_horizontal);
         imageView.setOnClickListener(v -> {
@@ -54,6 +55,17 @@ public class MultipleHorAdapter extends BaseQuickAdapter<PhotoData, BaseViewHold
                 AlbumActivity.startActivity(mContext, item.getAtlasID());
             }
         });
-        GlideUtils.loadImageView(mContext, item.getAtlasImg(), imageView);
+
+        if (type == MultipleItemCategory.CATEGORY_TABLE) {
+            helper.setVisible(R.id.tv_item_multiple_gold, false);
+            try {
+                Glide.with(mContext).load(item.getAtlasImg()).into(imageView);
+            } catch (Exception e) {
+                Glide.with(mContext).load(Integer.valueOf(item.getAtlasImg())).into(imageView);
+            }
+        } else {
+            helper.setVisible(R.id.tv_item_multiple_gold, true);
+            GlideUtils.loadImageView(mContext, item.getAtlasImg(), imageView);
+        }
     }
 }

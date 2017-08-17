@@ -32,7 +32,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 .execute(new JsonCallback<UserProfileData>() {
                     @Override
                     public void onSuccess(Response<UserProfileData> response) {
-                        mView.updateBalance(response.body().getUser().getBalance());
+                        UserProfileData user = response.body();
+                        if (user != null) {
+                            mView.updateBalance(user.getUser().getBalance());
+                        }
                     }
                 });
     }
