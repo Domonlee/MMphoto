@@ -11,11 +11,16 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import com.apkfuns.logutils.LogUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.litesuits.common.utils.TelephoneUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -35,6 +40,7 @@ import domon.cn.mmphoto.data.PayResultData;
 public class PayUtils {
     public static final int PAY_CHANNLE_WETCHAT = 1;
     public static final int PAY_CHANNLE_ALIPAY = 2;
+    public static final int PAY_CHANNLE_SMS = 2;
     public static final int PAY_TYPE_COIN = 1;
     public static final int PAY_TYPE_QUARTER = 2;
     public static final int PAY_TYPE_YEAR = 3;
@@ -130,6 +136,61 @@ public class PayUtils {
                         LogUtils.e(response.body());
                     }
                 });
+    }
+
+    public static void payForSMSOne(Activity act, int payCode, int payType) {
+        String reqUrl = Const.REQ_SMS_ONE
+                + "&payType=" + payType + "&payCode=" + payCode + "&imsi=" + TelephoneUtil.getIMSI(act)
+                + "&deviceId=" + getTelephoneDeviceID(act);
+
+        LogUtils.e(reqUrl);
+
+        OkGo.<String>get(reqUrl)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Gson gson = new Gson();
+                        JsonObject json = gson.fromJson(response.body(), JsonObject.class);
+                        String s = json.get("resultcode").getAsString();
+
+                        if (s.equals("0001")) {
+                        } else {
+                            SharedPreferenceUtil.setStringValue("resultdesc", json.get("resultdesc").getAsString());
+                            SharedPreferenceUtil.setStringValue("orderno", json.get("orderno").getAsString());
+                        }
+                    }
+                });
+    }
+
+    public static void payForSMSTwo(String code) {
+        String reqUrl = Const.REQ_SMS_TWO + "code=" + code + "&trade_id="
+                + SharedPreferenceUtil.getStringValue("resultdesc");
+
+        OkGo.<String>get(reqUrl)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                    }
+                });
+    }
+
+    public static void payForSMSThree() {
+        String reqUrl = Const.REQ_SMS_THREE + SharedPreferenceUtil.getStringValue("orderno");
+
+        OkGo.<String>get(reqUrl)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                    }
+                });
+    }
+
+
+    public static String getTelephoneDeviceID(Activity atc) {
+        TelephonyManager tm = (TelephonyManager) atc.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getDeviceId();
     }
 
     public static boolean isWeixinAvilible(Context context) {

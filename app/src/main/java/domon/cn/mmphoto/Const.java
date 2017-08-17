@@ -19,6 +19,11 @@ public class Const {
     public static final String REQ_PAY_IMG = BASE_URL + "pay/requestpay.ashx?";
     public static final String REQ_BUY_ALBUM = BASE_URL + "pay/requestpurchase.ashx";
 
+    //http://uuu.shafa5.com/Pay/RequestSMSPay.ashx?userId=1&payType=1&payCode=5&imsi=460110584789765&deviceId=A000004579F118
+    public static final String REQ_SMS_ONE = BASE_URL + "pay/RequestSMSPay.ashx?";
+    public static final String REQ_SMS_TWO = BASE_URL + "Pay/RequestSMSPayCode.ashx?";
+    public static final String REQ_SMS_THREE = BASE_URL + "Pay/RequestPayResult.ashx?orderNo=";
+
 
     public static final int PAY_YET = 1;
 
