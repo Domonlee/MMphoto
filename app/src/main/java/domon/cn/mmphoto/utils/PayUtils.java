@@ -84,6 +84,7 @@ public class PayUtils {
                     if (grant) {
                         LogUtils.e(reqUrl);
                         OkGo.<PayResultData>get(reqUrl)
+                                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                                 .execute(new JsonCallback<PayResultData>() {
                                     @Override
                                     public void onSuccess(Response<PayResultData> response) {
@@ -101,6 +102,7 @@ public class PayUtils {
         LogUtils.e("download path=" + path + fileName);
 
         OkGo.<File>get(url)
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new FileCallback(path, fileName) {
                     @Override
                     public void onSuccess(Response<File> response) {

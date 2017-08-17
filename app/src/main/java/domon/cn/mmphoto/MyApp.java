@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.HttpParams;
 import com.umeng.analytics.MobclickAgent;
 
 import domon.cn.mmphoto.utils.SharedPreferenceUtil;
@@ -38,12 +37,8 @@ public class MyApp extends Application {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        HttpParams params = new HttpParams();
-        params.put("userId", SharedPreferenceUtil.getIntegerValue("userID"));
-
         OkGo.getInstance().init(this)
                 .setOkHttpClient(builder.build())
-                .addCommonParams(params)
                 .setRetryCount(3);
 
         MobclickAgent.setScenarioType(mContext, MobclickAgent.EScenarioType.E_UM_NORMAL);

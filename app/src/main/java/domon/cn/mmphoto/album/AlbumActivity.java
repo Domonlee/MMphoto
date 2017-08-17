@@ -110,6 +110,7 @@ public class AlbumActivity extends AppCompatActivity {
 
     private void requestPurchase(String atlasID) {
         OkGo.<BuyAlbumRep>get(Const.REQ_BUY_ALBUM)
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .params("id", atlasID)
                 .execute(new DialogCallback<BuyAlbumRep>(AlbumActivity.this) {
                     @Override
@@ -158,6 +159,7 @@ public class AlbumActivity extends AppCompatActivity {
         String reqUrl = Const.REQ_ALBUM_WITH_ID + albumId;
 
         OkGo.<AlbumData>get(reqUrl)
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new JsonCallback<AlbumData>() {
                     @Override
                     public void onSuccess(Response<AlbumData> response) {

@@ -29,6 +29,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void requestUserProfileData() {
 
         OkGo.<UserProfileData>get(Const.REQ_USER_ID + "id=" + SharedPreferenceUtil.getIntegerValue("userID"))
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new JsonCallback<UserProfileData>() {
                     @Override
                     public void onSuccess(Response<UserProfileData> response) {

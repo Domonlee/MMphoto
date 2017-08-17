@@ -21,7 +21,7 @@ import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.ImageList;
-import domon.cn.mmphoto.utils.DataServer;
+import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 /**
  * Created by Domon on 2017/8/10.
@@ -78,16 +78,18 @@ public class PhotoViewActivity extends AppCompatActivity {
         final String reqUrl = Const.REQ_IMGLIST_WITH_ID + mAlbumID;
 
         OkGo.<ImageList>get(reqUrl)
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new JsonCallback<ImageList>() {
                     @Override
                     public void onSuccess(Response<ImageList> response) {
                         ImageList body = response.body();
                         if (body != null) {
                             List<ImageList.ImglistBean> list = body.getImglist();
-                            mViews = DataServer.getImageViews(PhotoViewActivity.this, list);
-
-                            mAdapter = new PhotoViewAdapter(mViews);
-                            mPhotoViewPager.setAdapter(mAdapter);
+//                            mViews = DataServer.getImageViews(PhotoViewActivity.this, list);
+                            if (list != null && list.size() > 0) {
+                                mAdapter = new PhotoViewAdapter(list);
+                                mPhotoViewPager.setAdapter(mAdapter);
+                            }
 
                         }
                     }

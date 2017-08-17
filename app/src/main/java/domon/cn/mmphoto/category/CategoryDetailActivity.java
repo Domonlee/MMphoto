@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import com.apkfuns.logutils.LogUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
@@ -26,6 +25,7 @@ import domon.cn.mmphoto.base.BaseActivity;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.CategoryDetailData;
 import domon.cn.mmphoto.data.PhotoData;
+import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 /**
  * Created by Domon on 2017/8/13.
@@ -81,6 +81,7 @@ public class CategoryDetailActivity extends BaseActivity {
 
     private void reqCategoryDetail() {
         OkGo.<CategoryDetailData>get(Const.REQ_CATEGORY_WITH_TYPE + mCategoryType)
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new JsonCallback<CategoryDetailData>() {
                     @Override
                     public void onSuccess(Response<CategoryDetailData> response) {

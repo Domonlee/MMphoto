@@ -6,6 +6,7 @@ import com.lzy.okgo.model.Response;
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.Atlas;
+import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 /**
  * Created by Domon on 2017/8/9.
@@ -29,6 +30,7 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void requestHomeData() {
         OkGo.<Atlas>get(Const.REQ_MAIN)
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new JsonCallback<Atlas>() {
                     @Override
                     public void onSuccess(Response<Atlas> response) {

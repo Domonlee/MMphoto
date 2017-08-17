@@ -9,6 +9,7 @@ import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.Category;
 import domon.cn.mmphoto.data.PhotoData;
+import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 /**
  * Created by Domon on 2017/8/9.
@@ -31,6 +32,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
     @Override
     public void requestCategory() {
         OkGo.<Category>get(Const.REQ_CATEGORY_WITH_TYPE+"1")
+                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new JsonCallback<Category>() {
                     @Override
                     public void onSuccess(Response<Category> response) {

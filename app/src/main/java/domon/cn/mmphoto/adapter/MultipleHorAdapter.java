@@ -59,9 +59,9 @@ public class MultipleHorAdapter extends BaseQuickAdapter<PhotoData, BaseViewHold
         if (type == MultipleItemCategory.CATEGORY_TABLE) {
             helper.setVisible(R.id.tv_item_multiple_gold, false);
             try {
-                Glide.with(mContext).load(item.getAtlasImg()).into(imageView);
-            } catch (Exception e) {
                 Glide.with(mContext).load(Integer.valueOf(item.getAtlasImg())).into(imageView);
+            } catch (Exception e) {
+                Glide.with(mContext).load(item.getAtlasImg()).into(imageView);
             }
         } else {
             helper.setVisible(R.id.tv_item_multiple_gold, true);
