@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
@@ -51,7 +52,7 @@ public class CategoryDetailActivity extends BaseActivity {
      * @param context
      * @param type
      */
-    public static void startActivity(Context context, int type) {
+    public static void startActivity(Context context, String type) {
         Intent intent = new Intent(context, CategoryDetailActivity.class);
         intent.putExtra(CategoryDetailActivity.CATEGORY_TYPE, type);
         context.startActivity(intent);
@@ -63,8 +64,11 @@ public class CategoryDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_category_detail);
 
         mUnbinder = ButterKnife.bind(this);
-        mCategoryType = getIntent().getIntExtra(CategoryDetailActivity.CATEGORY_TYPE, 1);
-        mTitleTv.setText(mTitleList.get(mCategoryType - 1));
+        String type = getIntent().getStringExtra(CategoryDetailActivity.CATEGORY_TYPE);
+        if (!TextUtils.isEmpty(type)) {
+            mCategoryType = Integer.valueOf(type);
+            mTitleTv.setText(mTitleList.get(mCategoryType - 1));
+        }
 
         initRecyclerView();
         reqCategoryDetail();

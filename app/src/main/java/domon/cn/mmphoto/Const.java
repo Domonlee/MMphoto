@@ -26,6 +26,8 @@ public class Const {
 
 
     public static final int PAY_YET = 1;
+    public static final int PAY_VIP1 = 2;
+    public static final int PAY_VIP2 = 3;
 
     public static final int BUY_SUCESS = 0;
     public static final int BUY_YET = 1;

@@ -15,10 +15,11 @@ import java.util.List;
 public class MultipleItemHome implements MultiItemEntity {
 
     public static final int BANNER = 1;
-    public static final int IMG_HORIZONTAL_SINGLE = 2;
-    public static final int IMG_HORIZONTAL_MULTIPLE = 3;
-    public static final int IMG_HORIZONTAL_BIG = 4;
-    public static final int IMG_TABLE = 5;
+    public static final int IMG_IMISS = 2;
+    public static final int IMG_MILLTAO = 3;
+    public static final int IMG_ROSE = 4;
+    public static final int IMG_TGOD = 5;
+    public static final int IMG_BOLOLI = 6;
 
     private int spanSize;
     private int itemType;
