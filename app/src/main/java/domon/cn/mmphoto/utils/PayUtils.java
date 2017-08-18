@@ -156,7 +156,7 @@ public class PayUtils {
     }
 
     public static void payForSMSOne(Activity act, int payCode, int payType) {
-        String reqUrl = Const.REQ_SMS_ONE
+        String reqUrl = Const.REQ_SMS_ONE + "&userId=" + SharedPreferenceUtil.getIntegerValue("userID")
                 + "&payType=" + payType + "&payCode=" + payCode + "&imsi=" + TelephoneUtil.getIMSI(act)
                 + "&deviceId=" + getTelephoneDeviceID(act);
 
