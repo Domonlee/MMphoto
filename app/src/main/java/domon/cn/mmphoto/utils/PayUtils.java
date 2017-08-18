@@ -3,14 +3,13 @@ package domon.cn.mmphoto.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
@@ -19,17 +18,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.litesuits.common.utils.TelephoneUtil;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.MyApp;
+import domon.cn.mmphoto.callback.BitmapDialogCallback;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.PayResultData;
 
@@ -95,7 +95,7 @@ public class PayUtils {
                                     @Override
                                     public void onSuccess(Response<PayResultData> response) {
                                         LogUtils.e(response.body());
-                                        downloadPic(response.body().getCode_img_url(), response.body().getAppid() + ".jpg"
+                                        downloadPic(act, response.body().getCode_img_url(), response.body().getAppid() + ".jpg"
                                                 , payChannel);
                                     }
                                 });
@@ -103,39 +103,56 @@ public class PayUtils {
                 });
     }
 
-    private static void downloadPic(String url, String fileName, int payChannel) {
+    private static void downloadPic(Activity activity, String url, String fileName, int payChannel) {
         String path = Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_PICTURES + "/";
         LogUtils.e("download path=" + path + fileName);
 
-        OkGo.<File>get(url)
-                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
-                .execute(new FileCallback(path, fileName) {
+        OkGo.<Bitmap>get(url)
+                .execute(new BitmapDialogCallback(activity) {
                     @Override
-                    public void onSuccess(Response<File> response) {
-                        LogUtils.e("download success,path=" + path + fileName);
-                        ContentResolver contentResolver = MyApp.getAppContext().getContentResolver();
+                    public void onSuccess(Response<Bitmap> response) {
+                        Bitmap bitmap = response.body();
+                        if (bitmap != null) {
+                            boolean isSuccess = saveImageToGallery(activity, bitmap);
 
-                        try {
-                            MediaStore.Images.Media.insertImage(contentResolver, path, fileName, null);
-//                            MyApp.getAppContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(path, fileName))));
-                            MyApp.getAppContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path + fileName)));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
+                            if (isSuccess) {
+                                if (payChannel == PAY_CHANNLE_ALIPAY) {
+                                    PayUtils.payForAliPay(MyApp.getAppContext());
+                                } else if (payChannel == PAY_CHANNLE_WETCHAT) {
+                                    PayUtils.payForWexinPay(MyApp.getAppContext());
+                                }
+                            }
                         }
-
-                        if (payChannel == PAY_CHANNLE_ALIPAY) {
-                            PayUtils.payForAliPay(MyApp.getAppContext());
-                        } else if (payChannel == PAY_CHANNLE_WETCHAT) {
-                            PayUtils.payForWexinPay(MyApp.getAppContext());
-                        }
-                    }
-
-                    @Override
-                    public void onError(Response<File> response) {
-                        super.onError(response);
-                        LogUtils.e(response.body());
                     }
                 });
+    }
+
+    private static boolean saveImageToGallery(Context context, Bitmap bitmap) {
+        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "mmPhoto";
+        File appDir = new File(storePath);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            //通过io流的方式来压缩保存图片
+            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 60, fos);
+            fos.flush();
+            fos.close();
+
+            //把文件插入到系统图库
+            //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+
+            //保存图片后发送广播通知更新数据库
+            Uri uri = Uri.fromFile(file);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+            return isSuccess;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static void payForSMSOne(Activity act, int payCode, int payType) {
