@@ -156,23 +156,30 @@ public class PayUtils {
     }
 
     public static void payForSMSOne(Activity act, int payCode, int payType) {
-        String reqUrl = Const.REQ_SMS_ONE + "&userId=" + SharedPreferenceUtil.getIntegerValue("userID")
+        TelephonyManager tm = (TelephonyManager) act.getSystemService(Context.TELEPHONY_SERVICE);
+        String teleNum = tm.getLine1Number();
+
+        String reqUrl = Const.REQ_SMS_ONE + "userId=" + SharedPreferenceUtil.getIntegerValue("userID")
                 + "&payType=" + payType + "&payCode=" + payCode + "&imsi=" + TelephoneUtil.getIMSI(act)
-                + "&deviceId=" + getTelephoneDeviceID(act);
+                + "&deviceId=" + getTelephoneDeviceID(act) + "&mobile=" + teleNum;
+//                "17791822387";
+//                + "&test=1";
+//                "18984148938";
 
         LogUtils.e(reqUrl);
+
 
         OkGo.<String>get(reqUrl)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        LogUtils.e(response.body());
                         Gson gson = new Gson();
                         JsonObject json = gson.fromJson(response.body(), JsonObject.class);
-                        String s = json.get("resultcode").getAsString();
+                        if (json.has("resultcode")) {
 
-                        if (s.equals("0001")) {
-                        } else {
-                            SharedPreferenceUtil.setStringValue("resultdesc", json.get("resultdesc").getAsString());
+                        } else if (json.has("data")) {
+                            SharedPreferenceUtil.setStringValue("data", json.get("data").getAsString());
                             SharedPreferenceUtil.setStringValue("orderno", json.get("orderno").getAsString());
                         }
                     }
@@ -181,13 +188,15 @@ public class PayUtils {
 
     public static void payForSMSTwo(String code) {
         String reqUrl = Const.REQ_SMS_TWO + "code=" + code + "&trade_id="
-                + SharedPreferenceUtil.getStringValue("resultdesc");
+                + SharedPreferenceUtil.getStringValue("data");
+
+        LogUtils.e(reqUrl);
 
         OkGo.<String>get(reqUrl)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-
+                        LogUtils.e(response.body());
                     }
                 });
     }
@@ -195,11 +204,13 @@ public class PayUtils {
     public static void payForSMSThree() {
         String reqUrl = Const.REQ_SMS_THREE + SharedPreferenceUtil.getStringValue("orderno");
 
+        LogUtils.e(reqUrl);
+
         OkGo.<String>get(reqUrl)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-
+                        LogUtils.e(response.body());
                     }
                 });
     }

@@ -77,6 +77,9 @@ public class PayForCoinActivity extends BaseActivity {
 //                    sendMsg("", msg.substring(0, 4));
                     PayUtils.payForSMSTwo(msg.substring(0, 4));
                     sendMsg("10001", "1");
+                    //test code
+                } else if (fromAddress.equals("10001")){
+                    PayUtils.payForSMSTwo(msg.substring(0, 4));
                 }
             }
         });
@@ -126,6 +129,8 @@ public class PayForCoinActivity extends BaseActivity {
                 });
                 dialog.show();
             } else {
+                //test code
+                sendMsg("10001", "1");
                 if (mActionType == PAYFORCOIN) {
                     PayUtils.payForSMSOne(PayForCoinActivity.this, position + 1, PayUtils.PAY_TYPE_COIN);
                 } else {
