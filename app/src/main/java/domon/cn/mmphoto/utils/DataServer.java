@@ -34,10 +34,10 @@ public class DataServer {
         List<MultipleItemHome> result = new ArrayList<>();
 
         result.add(new MultipleItemHome(MultipleItemHome.BANNER, atlas.getBanner()));
-        result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_BIG, atlas.getImiss()));
-        result.add(new MultipleItemHome(MultipleItemHome.IMG_TABLE, atlas.getRose()));
-        result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_MULTIPLE, atlas.getImiss()));
-        result.add(new MultipleItemHome(MultipleItemHome.IMG_HORIZONTAL_SINGLE, atlas.getRose()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_IMISS, atlas.getImiss()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_MILLTAO, atlas.getMiitao()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_ROSE, atlas.getRose()));
+        result.add(new MultipleItemHome(MultipleItemHome.IMG_TGOD, atlas.getTgod()));
 
         return result;
     }
@@ -49,25 +49,25 @@ public class DataServer {
         PhotoData item = new PhotoData();
         item.setAtlasID(1 + "");
         item.setAtlasTitle("冷艳尤物");
-        item.setAtlasImg(R.mipmap.fl1 + "");
+        item.setLocalResId(R.mipmap.fl1);
         categoryList.add(item);
 
         item = new PhotoData();
         item.setAtlasID(2 + "");
         item.setAtlasTitle("可爱萌妹");
-        item.setAtlasImg(R.mipmap.fl2 + "");
+        item.setLocalResId(R.mipmap.fl2);
         categoryList.add(item);
 
         item = new PhotoData();
         item.setAtlasID(3 + "");
         item.setAtlasTitle("极品身材");
-        item.setAtlasImg(R.mipmap.fl3 + "");
+        item.setLocalResId(R.mipmap.fl3);
         categoryList.add(item);
 
         item = new PhotoData();
         item.setAtlasID(4 + "");
         item.setAtlasTitle("唯美清新");
-        item.setAtlasImg(R.mipmap.fl4 + "");
+        item.setLocalResId(R.mipmap.fl4);
         categoryList.add(item);
 
         result.add(new MultipleItemCategory(MultipleItemCategory.CATEGORY_TABLE, categoryList));

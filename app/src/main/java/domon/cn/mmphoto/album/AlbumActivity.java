@@ -72,7 +72,9 @@ public class AlbumActivity extends AppCompatActivity {
     void onMainClick() {
         PhotoData photoData = mAlbumData.getAtlas();
         if (photoData != null) {
-            if (Const.PAY_YET == photoData.getAtlasPaid()) {
+            if (Const.PAY_YET == photoData.getAtlasPaid()
+                    || Const.PAY_VIP1 == photoData.getAtlasPaid()
+                    || Const.PAY_VIP2 == photoData.getAtlasPaid()) {
                 PhotoViewActivity.startActivity(this, mAlbumData.getAtlas().getAtlasID());
             } else {
                 int balance = SharedPreferenceUtil.getIntegerValue("userBalance");
@@ -96,7 +98,7 @@ public class AlbumActivity extends AppCompatActivity {
                             .positiveText("充值")
                             .negativeText("再考虑一下")
                             .onPositive((dialog, which) -> {
-                                PayForCoinActivity.startActivity(AlbumActivity.this,PayForCoinActivity.PAYFORCOIN);
+                                PayForCoinActivity.startActivity(AlbumActivity.this, PayForCoinActivity.PAYFORCOIN);
                             })
                             .show();
                 }

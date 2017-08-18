@@ -14,6 +14,15 @@ public class PhotoData {
     private int AtlasCost;
     private int AtlasType;
     private int AtlasPaid;
+    private int localResId;
+
+    public int getLocalResId() {
+        return localResId;
+    }
+
+    public void setLocalResId(int localResId) {
+        this.localResId = localResId;
+    }
 
     public int getID() {
         return ID;
