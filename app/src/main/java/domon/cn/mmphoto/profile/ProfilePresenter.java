@@ -35,7 +35,19 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     public void onSuccess(Response<UserProfileData> response) {
                         UserProfileData user = response.body();
                         if (user != null) {
-                            mView.updateBalance(user.getUser().getBalance());
+                            switch (user.getUser().getVIPType()) {
+                                case 1:
+                                    mView.updateBalance(user.getUser().getBalance(), 1);
+                                    break;
+                                case 2:
+                                    mView.updateBalance(user.getUser().getBalance(), 2);
+                                    break;
+                                case 3:
+                                    mView.updateBalance(user.getUser().getBalance(), 3);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 });
