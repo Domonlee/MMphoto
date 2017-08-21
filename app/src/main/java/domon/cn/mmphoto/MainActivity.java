@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.litesuits.common.utils.TelephoneUtil;
 import com.lzy.okgo.OkGo;
@@ -16,7 +15,6 @@ import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yinglan.alphatabs.AlphaTabView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
-import com.yinglan.alphatabs.OnTabChangedListner;
 
 import java.util.List;
 
@@ -60,25 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
         mProfileAlphaTabView.showPoint();
 
-        mAlphaTabsIndicator.setOnTabChangedListner(new OnTabChangedListner() {
-            @Override
-            public void onTabSelected(int tabNum) {
-                switch (tabNum) {
-                    case 0:
-                        Toast.makeText(getApplicationContext(), "推荐", Toast.LENGTH_SHORT).show();
-                        switchFragment(HomeFragment.class);
-                        break;
-                    case 1:
-                        Toast.makeText(getApplicationContext(), "分类", Toast.LENGTH_SHORT).show();
-                        switchFragment(CategoryFragment.class);
-                        break;
-                    case 2:
-                        Toast.makeText(getApplicationContext(), "我的", Toast.LENGTH_SHORT).show();
-                        switchFragment(ProfileFragment.class);
-                        break;
-                    default:
-                        break;
-                }
+        mAlphaTabsIndicator.setOnTabChangedListner(tabNum -> {
+            switch (tabNum) {
+                case 0:
+                    switchFragment(HomeFragment.class);
+                    break;
+                case 1:
+                    switchFragment(CategoryFragment.class);
+                    break;
+                case 2:
+                    switchFragment(ProfileFragment.class);
+                    break;
+                default:
+                    break;
             }
         });
 

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,6 +78,7 @@ public class AlbumActivity extends AppCompatActivity {
                     || Const.PAY_VIP2 == photoData.getAtlasPaid()) {
                 PhotoViewActivity.startActivity(this, mAlbumData.getAtlas().getAtlasID());
             } else {
+                MobclickAgent.onEvent(this,"pay_album");
                 int balance = SharedPreferenceUtil.getIntegerValue("userBalance");
                 if (balance > 0 && balance >= mAlbumData.getAtlas().getAtlasCost()) {
                     new MaterialDialog.Builder(this)
@@ -99,6 +101,7 @@ public class AlbumActivity extends AppCompatActivity {
                             .negativeText("再考虑一下")
                             .onPositive((dialog, which) -> {
                                 PayForCoinActivity.startActivity(AlbumActivity.this, PayForCoinActivity.PAYFORCOIN);
+                                MobclickAgent.onEvent(this,"goto_pay");
                             })
                             .show();
                 }

@@ -21,6 +21,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,6 +48,7 @@ public class PayUtils {
 
     public static void payForWexinPay(Context context) {
         if (isWeixinAvilible(context)) {
+            MobclickAgent.onEvent(context,"wexinpay_success");
             Intent intent = new Intent();
             ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
             intent.setAction(Intent.ACTION_MAIN);
@@ -61,6 +63,7 @@ public class PayUtils {
 
     public static void payForAliPay(Context context) {
         try {
+            MobclickAgent.onEvent(context,"alipay_success");
             //利用Intent打开支付宝
             //支付宝跳过开启动画打开扫码和付款码的url scheme分别是alipayqr://platformapi/startapp?saId=10000007和
             //alipayqr://platformapi/startapp?saId=20000056
@@ -159,6 +162,8 @@ public class PayUtils {
         TelephonyManager tm = (TelephonyManager) act.getSystemService(Context.TELEPHONY_SERVICE);
         String teleNum = tm.getLine1Number();
 
+        MobclickAgent.onEvent(act,"pay_smsone");
+
         String reqUrl = Const.REQ_SMS_ONE + "userId=" + SharedPreferenceUtil.getIntegerValue("userID")
                 + "&payType=" + payType + "&payCode=" + payCode + "&imsi=" + TelephoneUtil.getIMSI(act)
                 + "&deviceId=" + getTelephoneDeviceID(act) + "&mobile=" + teleNum;
@@ -190,6 +195,7 @@ public class PayUtils {
         String reqUrl = Const.REQ_SMS_TWO + "code=" + code + "&trade_id="
                 + SharedPreferenceUtil.getStringValue("data");
 
+        MobclickAgent.onEvent(MyApp.getAppContext(),"pay_smstwo");
         LogUtils.e(reqUrl);
 
         OkGo.<String>get(reqUrl)
@@ -203,6 +209,7 @@ public class PayUtils {
 
     public static void payForSMSThree() {
         String reqUrl = Const.REQ_SMS_THREE + SharedPreferenceUtil.getStringValue("orderno");
+        MobclickAgent.onEvent(MyApp.getAppContext(),"pay_smsthree");
 
         LogUtils.e(reqUrl);
 

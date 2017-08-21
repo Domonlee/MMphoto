@@ -163,6 +163,7 @@ public class PayForCoinActivity extends BaseActivity {
     private void showCodeDialog(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(PayForCoinActivity.this);
         final EditText editText = new EditText(PayForCoinActivity.this);
+        editText.setHint("请等待短信发送，填入短信验证码");
         dialog.setTitle("短信验证码");
         dialog.setMessage("请输入您接收到的短信验证码，完成充值");
 
