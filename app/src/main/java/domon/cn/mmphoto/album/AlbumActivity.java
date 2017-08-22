@@ -145,7 +145,6 @@ public class AlbumActivity extends AppCompatActivity {
 
         initRecyclerView();
 
-        //todo the sub view's width is wrong
         mAdapter = new MultipleHorAdapter(R.layout.item_multiple_vertical, MultipleItemCategory.CATEGORY_TABLE, mAlbumData.getRecommend());
         mRecyclerView.setAdapter(mAdapter);
 

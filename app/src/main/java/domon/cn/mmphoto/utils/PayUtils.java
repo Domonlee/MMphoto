@@ -48,7 +48,8 @@ public class PayUtils {
 
     public static void payForWexinPay(Context context) {
         if (isWeixinAvilible(context)) {
-            MobclickAgent.onEvent(context,"wexinpay_success");
+            MobclickAgent.onEvent(context, "wexinpay_success");
+            Toast.makeText(context, "请打开微信扫一扫，点击右上角菜单，选择相册中二维码扫描喔~", Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
             ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
             intent.setAction(Intent.ACTION_MAIN);
@@ -63,7 +64,8 @@ public class PayUtils {
 
     public static void payForAliPay(Context context) {
         try {
-            MobclickAgent.onEvent(context,"alipay_success");
+            MobclickAgent.onEvent(context, "alipay_success");
+            Toast.makeText(context, "请打开支付宝扫一扫，点击右上角菜单，选择相册中二维码扫描喔~", Toast.LENGTH_LONG).show();
             //利用Intent打开支付宝
             //支付宝跳过开启动画打开扫码和付款码的url scheme分别是alipayqr://platformapi/startapp?saId=10000007和
             //alipayqr://platformapi/startapp?saId=20000056
@@ -85,7 +87,8 @@ public class PayUtils {
      * @param payChannel 1:微富通微信支付 2:微富通支付宝支付 3:知名短代
      */
     public static void payInit(Activity act, int payCode, int payType, int payChannel) {
-        String reqUrl = Const.REQ_PAY_IMG + "&payCode=" + payCode + "&payType=" + payType + "&payChannel=" + payChannel;
+        String reqUrl = Const.REQ_PAY_IMG + "userId=" + SharedPreferenceUtil.getIntegerValue("userID") +
+                "&payCode=" + payCode + "&payType=" + payType + "&payChannel=" + payChannel;
 
         RxPermissions rxPermissions = new RxPermissions(act);
         rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -93,13 +96,15 @@ public class PayUtils {
                     if (grant) {
                         LogUtils.e(reqUrl);
                         OkGo.<PayResultData>get(reqUrl)
-                                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
+//                                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                                 .execute(new JsonCallback<PayResultData>() {
                                     @Override
                                     public void onSuccess(Response<PayResultData> response) {
                                         LogUtils.e(response.body());
-                                        downloadPic(act, response.body().getCode_img_url(), response.body().getAppid() + ".jpg"
-                                                , payChannel);
+                                        if (response.body() != null) {
+                                            downloadPic(act, response.body().getCode_img_url(), response.body().getAppid() + ".jpg"
+                                                    , payChannel);
+                                        }
                                     }
                                 });
                     }
@@ -162,15 +167,13 @@ public class PayUtils {
         TelephonyManager tm = (TelephonyManager) act.getSystemService(Context.TELEPHONY_SERVICE);
         String teleNum = tm.getLine1Number();
 
-        MobclickAgent.onEvent(act,"pay_smsone");
+        MobclickAgent.onEvent(act, "pay_smsone");
 
         String reqUrl = Const.REQ_SMS_ONE + "userId=" + SharedPreferenceUtil.getIntegerValue("userID")
                 + "&payType=" + payType + "&payCode=" + payCode + "&imsi=" + TelephoneUtil.getIMSI(act)
                 + "&deviceId=" + getTelephoneDeviceID(act) + "&mobile=" + teleNum;
-//                "17791822387";
-//                + "&test=1";
+//                "&test=0";
 //                "18984148938";
-
         LogUtils.e(reqUrl);
 
 
@@ -193,9 +196,11 @@ public class PayUtils {
 
     public static void payForSMSTwo(String code) {
         String reqUrl = Const.REQ_SMS_TWO + "code=" + code + "&trade_id="
-                + SharedPreferenceUtil.getStringValue("data");
+                + SharedPreferenceUtil.getStringValue("data")
+                + "&order_no=" + SharedPreferenceUtil.getStringValue("orderno")
+                + "&test=0";
 
-        MobclickAgent.onEvent(MyApp.getAppContext(),"pay_smstwo");
+        MobclickAgent.onEvent(MyApp.getAppContext(), "pay_smstwo");
         LogUtils.e(reqUrl);
 
         OkGo.<String>get(reqUrl)
@@ -209,7 +214,7 @@ public class PayUtils {
 
     public static void payForSMSThree() {
         String reqUrl = Const.REQ_SMS_THREE + SharedPreferenceUtil.getStringValue("orderno");
-        MobclickAgent.onEvent(MyApp.getAppContext(),"pay_smsthree");
+        MobclickAgent.onEvent(MyApp.getAppContext(), "pay_smsthree");
 
         LogUtils.e(reqUrl);
 

