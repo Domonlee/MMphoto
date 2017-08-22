@@ -197,8 +197,7 @@ public class PayUtils {
     public static void payForSMSTwo(String code) {
         String reqUrl = Const.REQ_SMS_TWO + "code=" + code + "&trade_id="
                 + SharedPreferenceUtil.getStringValue("data")
-                + "&order_no=" + SharedPreferenceUtil.getStringValue("orderno")
-                + "&test=0";
+                + "&order_no=" + SharedPreferenceUtil.getStringValue("orderno");
 
         MobclickAgent.onEvent(MyApp.getAppContext(), "pay_smstwo");
         LogUtils.e(reqUrl);
