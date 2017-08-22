@@ -102,18 +102,18 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public void updateBalance(int balance, int vipType) {
         switch (vipType) {
-            case 0:
+            case 1:
                 SharedPreferenceUtil.setIntegerValue("userBalance", balance);
                 mBalanceTv.setText("金币余额:" +
                         SharedPreferenceUtil.getIntegerValue("userBalance"));
                 break;
-            case 1:
-                mBalanceTv.setText("年度会员");
-                SharedPreferenceUtil.setIntegerValue("VIPType",1);
-                break;
             case 2:
-                mBalanceTv.setText("季度会员");
+                mBalanceTv.setText("年度会员");
                 SharedPreferenceUtil.setIntegerValue("VIPType",2);
+                break;
+            case 3:
+                mBalanceTv.setText("季度会员");
+                SharedPreferenceUtil.setIntegerValue("VIPType",3);
                 break;
             default:
                 break;
