@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
@@ -52,7 +51,7 @@ public class CategoryDetailActivity extends BaseActivity {
      * @param context
      * @param type
      */
-    public static void startActivity(Context context, String type) {
+    public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, CategoryDetailActivity.class);
         intent.putExtra(CategoryDetailActivity.CATEGORY_TYPE, type);
         context.startActivity(intent);
@@ -64,9 +63,8 @@ public class CategoryDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_category_detail);
 
         mUnbinder = ButterKnife.bind(this);
-        String type = getIntent().getStringExtra(CategoryDetailActivity.CATEGORY_TYPE);
-        if (!TextUtils.isEmpty(type)) {
-            mCategoryType = Integer.valueOf(type);
+        mCategoryType = getIntent().getIntExtra(CategoryDetailActivity.CATEGORY_TYPE, 0);
+        if (mCategoryType > 0) {
             mTitleTv.setText(mTitleList.get(mCategoryType - 1));
         }
 
@@ -89,7 +87,14 @@ public class CategoryDetailActivity extends BaseActivity {
                 .execute(new JsonCallback<CategoryDetailData>() {
                     @Override
                     public void onSuccess(Response<CategoryDetailData> response) {
-                        mAdapter.setNewData(response.body().getAtlas().get(0).getAtlasList());
+                        CategoryDetailData result = response.body();
+                        if (result != null) {
+                            List<CategoryDetailData.AtlasBean> list = result.getAtlas();
+                            if (list != null && list.size() > 0) {
+                                mAdapter.setNewData(list.get(0).getAtlasList());
+
+                            }
+                        }
                     }
                 });
     }

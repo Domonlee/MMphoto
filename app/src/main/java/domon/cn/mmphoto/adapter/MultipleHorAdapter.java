@@ -49,7 +49,7 @@ public class MultipleHorAdapter extends BaseQuickAdapter<PhotoData, BaseViewHold
         ImageView imageView = helper.getView(R.id.iv_item_multiple_horizontal);
         imageView.setOnClickListener(v -> {
             if (type == MultipleItemCategory.CATEGORY_TABLE) {
-                CategoryDetailActivity.startActivity(mContext, item.getAtlasID());
+                CategoryDetailActivity.startActivity(mContext, item.getAtlasType());
             } else {
                 AlbumActivity.startActivity(mContext, item.getAtlasID());
             }

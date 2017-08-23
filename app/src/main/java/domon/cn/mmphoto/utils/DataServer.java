@@ -47,25 +47,25 @@ public class DataServer {
 
         List<PhotoData> categoryList = new ArrayList<>();
         PhotoData item = new PhotoData();
-        item.setAtlasID(1 + "");
+        item.setAtlasType(1);
         item.setAtlasTitle("冷艳尤物");
         item.setLocalResId(R.mipmap.fl1);
         categoryList.add(item);
 
         item = new PhotoData();
-        item.setAtlasID(2 + "");
+        item.setAtlasType(2);
         item.setAtlasTitle("可爱萌妹");
         item.setLocalResId(R.mipmap.fl2);
         categoryList.add(item);
 
         item = new PhotoData();
-        item.setAtlasID(3 + "");
+        item.setAtlasType(3);
         item.setAtlasTitle("极品身材");
         item.setLocalResId(R.mipmap.fl3);
         categoryList.add(item);
 
         item = new PhotoData();
-        item.setAtlasID(4 + "");
+        item.setAtlasType(4);
         item.setAtlasTitle("唯美清新");
         item.setLocalResId(R.mipmap.fl4);
         categoryList.add(item);

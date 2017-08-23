@@ -100,10 +100,9 @@ public class PayUtils {
                                 .execute(new JsonCallback<PayResultData>() {
                                     @Override
                                     public void onSuccess(Response<PayResultData> response) {
-                                        LogUtils.e(response.body());
-                                        if (response.body() != null) {
-                                            downloadPic(act, response.body().getCode_img_url(), response.body().getAppid() + ".jpg"
-                                                    , payChannel);
+                                        PayResultData result = response.body();
+                                        if (result != null) {
+                                            downloadPic(act, result.getCode_img_url(), result.getAppid() + ".jpg", payChannel);
                                         }
                                     }
                                 });
