@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
-import com.litesuits.common.utils.TelephoneUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -27,6 +26,7 @@ import domon.cn.mmphoto.data.UserProfileData;
 import domon.cn.mmphoto.home.HomeFragment;
 import domon.cn.mmphoto.profile.ProfileFragment;
 import domon.cn.mmphoto.utils.FragmentUtils;
+import domon.cn.mmphoto.utils.PhoneUtil;
 import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -92,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
     private void reqForUserId() {
         final String reqUrl;
 
+        // FIXME: 2017/8/23 if the IMEI can't read, the userID will be null
         if (SharedPreferenceUtil.getIntegerValue("userID") == -1) {
-            reqUrl = Const.REQ_USER_ID + "code=" + TelephoneUtil.getIMEI(this);
+            // TODO: 2017/8/23 use phone for test
+            reqUrl = Const.REQ_USER_ID + "code=" + PhoneUtil.getPhoneSign(this);
         } else {
             reqUrl = Const.REQ_USER_ID + "id=" + SharedPreferenceUtil.getIntegerValue("userID");
         }

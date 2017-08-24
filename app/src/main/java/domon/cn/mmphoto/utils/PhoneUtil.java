@@ -23,9 +23,8 @@ public class PhoneUtil {
         // 渠道标志
         try {
             //IMEI（imei）
-            String imei = TelephoneUtil.getIMEI(context);
-            if (!TextUtils.isEmpty(imei)) {
-                return imei;
+            if (!TextUtils.isEmpty(getImei(context))) {
+                return getImei(context);
             }
 
             //如果上面都没有， 则生成一个id：随机码
@@ -38,6 +37,72 @@ public class PhoneUtil {
             deviceId.append(getUUID());
         }
         return deviceId.toString();
+    }
+
+    private static String getImei(Context context) {
+        String imei = TelephoneUtil.getIMEI(context);
+        if (!TextUtils.isEmpty(imei)) {
+            return imei;
+        }
+        if (!TextUtils.isEmpty(switchTeleInfo(1, context))) {
+            return switchTeleInfo(1, context);
+        }
+        if (!TextUtils.isEmpty(switchTeleInfo(2, context))) {
+            return switchTeleInfo(2, context);
+        }
+        if (!TextUtils.isEmpty(switchTeleInfo(3, context))) {
+            return switchTeleInfo(3, context);
+        }
+        if (!TextUtils.isEmpty(switchTeleInfo(4, context))) {
+            return switchTeleInfo(4, context);
+        }
+
+        return imei;
+    }
+
+    private static String switchTeleInfo(int i, Context context) {
+        TelephoneUtil.TeleInfo teleInfo = new TelephoneUtil.TeleInfo();
+        switch (i) {
+            case 1:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imei_1)) {
+                    return teleInfo.imei_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imei_2)) {
+                    return teleInfo.imei_2;
+                }
+                break;
+            case 2:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imei_1)) {
+                    return teleInfo.imei_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imei_2)) {
+                    return teleInfo.imei_2;
+                }
+                break;
+            case 3:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imei_1)) {
+                    return teleInfo.imei_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imei_2)) {
+                    return teleInfo.imei_2;
+                }
+                break;
+            case 4:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imei_1)) {
+                    return teleInfo.imei_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imei_2)) {
+                    return teleInfo.imei_2;
+                }
+                break;
+            default:
+                break;
+        }
+        return "";
     }
 
     //得到全局唯一UUID
