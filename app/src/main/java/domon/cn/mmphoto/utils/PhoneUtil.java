@@ -73,7 +73,7 @@ public class PhoneUtil {
                 }
                 break;
             case 2:
-                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                teleInfo = TelephoneUtil.getMtkTeleInfo2(context);
                 if (!TextUtils.isEmpty(teleInfo.imei_1)) {
                     return teleInfo.imei_1;
                 }
@@ -82,7 +82,7 @@ public class PhoneUtil {
                 }
                 break;
             case 3:
-                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                teleInfo = TelephoneUtil.getQualcommTeleInfo(context);
                 if (!TextUtils.isEmpty(teleInfo.imei_1)) {
                     return teleInfo.imei_1;
                 }
@@ -91,7 +91,7 @@ public class PhoneUtil {
                 }
                 break;
             case 4:
-                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                teleInfo = TelephoneUtil.getSpreadtrumTeleInfo(context);
                 if (!TextUtils.isEmpty(teleInfo.imei_1)) {
                     return teleInfo.imei_1;
                 }
@@ -139,7 +139,7 @@ public class PhoneUtil {
                 }
                 break;
             case 2:
-                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                teleInfo = TelephoneUtil.getMtkTeleInfo2(context);
                 if (!TextUtils.isEmpty(teleInfo.imsi_1) && isChinaDX(teleInfo.imsi_1)) {
                     return teleInfo.imsi_1;
                 }
@@ -148,7 +148,7 @@ public class PhoneUtil {
                 }
                 break;
             case 3:
-                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                teleInfo = TelephoneUtil.getQualcommTeleInfo(context);
                 if (!TextUtils.isEmpty(teleInfo.imsi_1) && isChinaDX(teleInfo.imsi_1)) {
                     return teleInfo.imsi_1;
                 }
@@ -157,7 +157,7 @@ public class PhoneUtil {
                 }
                 break;
             case 4:
-                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                teleInfo = TelephoneUtil.getSpreadtrumTeleInfo(context);
                 if (!TextUtils.isEmpty(teleInfo.imsi_1) && isChinaDX(teleInfo.imsi_1)) {
                     return teleInfo.imsi_1;
                 }
