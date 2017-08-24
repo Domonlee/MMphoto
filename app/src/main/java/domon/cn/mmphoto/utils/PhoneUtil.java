@@ -44,23 +44,23 @@ public class PhoneUtil {
         if (!TextUtils.isEmpty(imei)) {
             return imei;
         }
-        if (!TextUtils.isEmpty(switchTeleInfo(1, context))) {
-            return switchTeleInfo(1, context);
+        if (!TextUtils.isEmpty(switchTeleInfoIMEI(1, context))) {
+            return switchTeleInfoIMEI(1, context);
         }
-        if (!TextUtils.isEmpty(switchTeleInfo(2, context))) {
-            return switchTeleInfo(2, context);
+        if (!TextUtils.isEmpty(switchTeleInfoIMEI(2, context))) {
+            return switchTeleInfoIMEI(2, context);
         }
-        if (!TextUtils.isEmpty(switchTeleInfo(3, context))) {
-            return switchTeleInfo(3, context);
+        if (!TextUtils.isEmpty(switchTeleInfoIMEI(3, context))) {
+            return switchTeleInfoIMEI(3, context);
         }
-        if (!TextUtils.isEmpty(switchTeleInfo(4, context))) {
-            return switchTeleInfo(4, context);
+        if (!TextUtils.isEmpty(switchTeleInfoIMEI(4, context))) {
+            return switchTeleInfoIMEI(4, context);
         }
 
         return imei;
     }
 
-    private static String switchTeleInfo(int i, Context context) {
+    private static String switchTeleInfoIMEI(int i, Context context) {
         TelephoneUtil.TeleInfo teleInfo = new TelephoneUtil.TeleInfo();
         switch (i) {
             case 1:
@@ -97,6 +97,72 @@ public class PhoneUtil {
                 }
                 if (!TextUtils.isEmpty(teleInfo.imei_2)) {
                     return teleInfo.imei_2;
+                }
+                break;
+            default:
+                break;
+        }
+        return "";
+    }
+
+    private static String getImsi(Context context) {
+        String imsi = TelephoneUtil.getIMSI(context);
+        if (!TextUtils.isEmpty(imsi)) {
+            return imsi;
+        }
+        if (!TextUtils.isEmpty(switchTeleInfoIMSI(1, context))) {
+            return switchTeleInfoIMSI(1, context);
+        }
+        if (!TextUtils.isEmpty(switchTeleInfoIMSI(2, context))) {
+            return switchTeleInfoIMSI(2, context);
+        }
+        if (!TextUtils.isEmpty(switchTeleInfoIMSI(3, context))) {
+            return switchTeleInfoIMSI(3, context);
+        }
+        if (!TextUtils.isEmpty(switchTeleInfoIMSI(4, context))) {
+            return switchTeleInfoIMSI(4, context);
+        }
+
+        return imsi;
+    }
+
+    private static String switchTeleInfoIMSI(int i, Context context) {
+        TelephoneUtil.TeleInfo teleInfo = new TelephoneUtil.TeleInfo();
+        switch (i) {
+            case 1:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                    return teleInfo.imsi_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                    return teleInfo.imsi_2;
+                }
+                break;
+            case 2:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                    return teleInfo.imsi_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                    return teleInfo.imsi_2;
+                }
+                break;
+            case 3:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                    return teleInfo.imsi_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                    return teleInfo.imsi_2;
+                }
+                break;
+            case 4:
+                teleInfo = TelephoneUtil.getMtkTeleInfo(context);
+                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                    return teleInfo.imsi_1;
+                }
+                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                    return teleInfo.imsi_2;
                 }
                 break;
             default:
