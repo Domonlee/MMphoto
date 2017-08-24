@@ -105,7 +105,7 @@ public class PhoneUtil {
         return "";
     }
 
-    private static String getImsi(Context context) {
+    public static String getImsi(Context context) {
         String imsi = TelephoneUtil.getIMSI(context);
         if (!TextUtils.isEmpty(imsi)) {
             return imsi;
@@ -131,37 +131,37 @@ public class PhoneUtil {
         switch (i) {
             case 1:
                 teleInfo = TelephoneUtil.getMtkTeleInfo(context);
-                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_1) && isChinaDX(teleInfo.imsi_1)) {
                     return teleInfo.imsi_1;
                 }
-                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_2)&& isChinaDX(teleInfo.imsi_2)) {
                     return teleInfo.imsi_2;
                 }
                 break;
             case 2:
                 teleInfo = TelephoneUtil.getMtkTeleInfo(context);
-                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_1) && isChinaDX(teleInfo.imsi_1)) {
                     return teleInfo.imsi_1;
                 }
-                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_2) && isChinaDX(teleInfo.imsi_2)) {
                     return teleInfo.imsi_2;
                 }
                 break;
             case 3:
                 teleInfo = TelephoneUtil.getMtkTeleInfo(context);
-                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_1) && isChinaDX(teleInfo.imsi_1)) {
                     return teleInfo.imsi_1;
                 }
-                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_2) && isChinaDX(teleInfo.imsi_2)) {
                     return teleInfo.imsi_2;
                 }
                 break;
             case 4:
                 teleInfo = TelephoneUtil.getMtkTeleInfo(context);
-                if (!TextUtils.isEmpty(teleInfo.imsi_1)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_1) && isChinaDX(teleInfo.imsi_1)) {
                     return teleInfo.imsi_1;
                 }
-                if (!TextUtils.isEmpty(teleInfo.imsi_2)) {
+                if (!TextUtils.isEmpty(teleInfo.imsi_2) && isChinaDX(teleInfo.imsi_2)) {
                     return teleInfo.imsi_2;
                 }
                 break;
@@ -169,6 +169,13 @@ public class PhoneUtil {
                 break;
         }
         return "";
+    }
+
+    private static boolean isChinaDX(String s) {
+        if (s.startsWith("46003") || s.startsWith("46011") || s.startsWith("46005")) {
+            return true;
+        }
+        return false;
     }
 
     //得到全局唯一UUID

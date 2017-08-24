@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.apkfuns.logutils.LogUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.litesuits.common.utils.TelephoneUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -169,7 +168,7 @@ public class PayUtils {
         MobclickAgent.onEvent(act, "pay_smsone");
 
         String reqUrl = Const.REQ_SMS_ONE + "userId=" + SharedPreferenceUtil.getIntegerValue("userID")
-                + "&payType=" + payType + "&payCode=" + payCode + "&imsi=" + TelephoneUtil.getIMSI(act)
+                + "&payType=" + payType + "&payCode=" + payCode + "&imsi=" + PhoneUtil.getImsi(act)
                 + "&deviceId=" + getTelephoneDeviceID(act) + "&mobile=" + teleNum;
 //                "&test=0";
 //                "18984148938";

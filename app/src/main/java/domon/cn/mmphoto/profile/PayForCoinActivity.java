@@ -29,6 +29,7 @@ import domon.cn.mmphoto.adapter.PayCoinAdapter;
 import domon.cn.mmphoto.base.BaseActivity;
 import domon.cn.mmphoto.utils.PayDetailDialog;
 import domon.cn.mmphoto.utils.PayUtils;
+import domon.cn.mmphoto.utils.PhoneUtil;
 
 /**
  * Created by Domon on 2017/8/14.
@@ -99,7 +100,7 @@ public class PayForCoinActivity extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            String imsi = TelephoneUtil.getIMSI(PayForCoinActivity.this);
+            String imsi = PhoneUtil.getImsi(PayForCoinActivity.this);
             if (!TextUtils.isEmpty(imsi) && !imsi.startsWith("46003") && (!imsi.startsWith("46011")) && (!imsi.startsWith("46005"))) {
                 initThirdPayDialog(position);
             } else {
