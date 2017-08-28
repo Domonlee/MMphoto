@@ -21,7 +21,7 @@ public class SharedPreferenceUtil {
             if (mSp != null) {
                 return;
             }
-            mSp = context.getSharedPreferences(preference_name, Activity.MODE_WORLD_WRITEABLE);
+            mSp = context.getSharedPreferences(preference_name, Activity.MODE_PRIVATE);
         } catch (Exception e) {
             LogUtils.e("init preference exception:" + e);
         }
