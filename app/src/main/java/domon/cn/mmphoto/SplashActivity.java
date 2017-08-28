@@ -43,16 +43,13 @@ public class SplashActivity extends BaseActivity {
                     }
                 });
 
-
-        new Handler().postDelayed(() -> startMainActivity(), 2000);
+        new Handler().postDelayed(() -> startMainActivity(), 1500);
     }
 
     private void reqForUserId() {
         final String reqUrl;
 
-        // FIXME: 2017/8/23 if the IMEI can't read, the userID will be null
         if (SharedPreferenceUtil.getIntegerValue("userID") == -1) {
-            // TODO: 2017/8/23 use phone for test
             reqUrl = Const.REQ_USER_ID + "code=" + PhoneUtil.getPhoneSign(this);
         } else {
             reqUrl = Const.REQ_USER_ID + "id=" + SharedPreferenceUtil.getIntegerValue("userID");
@@ -68,7 +65,6 @@ public class SplashActivity extends BaseActivity {
                             SharedPreferenceUtil.setIntegerValue("userVIPType", user.getUser().getVIPType());
                             SharedPreferenceUtil.setIntegerValue("userBalance", user.getUser().getBalance());
                             SharedPreferenceUtil.setIntegerValue("userID", user.getUser().getID());
-                            LogUtils.e("save userID");
                         }
                     }
 
