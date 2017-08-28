@@ -89,7 +89,7 @@ public class AlbumActivity extends AppCompatActivity {
                             .negativeText("再考虑一下")
                             .onPositive((dialog, which) -> {
                                 //消费金币
-                                requestPurchase(photoData.getID() + "");
+                                requestPurchase(photoData.getID() + "", photoData.getAtlasID());
                             })
                             .show();
                 } else {
@@ -113,10 +113,10 @@ public class AlbumActivity extends AppCompatActivity {
 
     }
 
-    private void requestPurchase(String atlasID) {
+    private void requestPurchase(String id, String atlasID) {
         OkGo.<BuyAlbumRep>get(Const.REQ_BUY_ALBUM)
                 .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
-                .params("id", atlasID)
+                .params("id", id)
                 .execute(new DialogCallback<BuyAlbumRep>(AlbumActivity.this) {
                     @Override
                     public void onSuccess(Response<BuyAlbumRep> response) {
