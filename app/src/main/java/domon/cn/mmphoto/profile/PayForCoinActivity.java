@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.apkfuns.logutils.LogUtils;
-import com.litesuits.common.receiver.SmsReceiver;
-import com.litesuits.common.utils.TelephoneUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -30,6 +28,8 @@ import domon.cn.mmphoto.base.BaseActivity;
 import domon.cn.mmphoto.utils.PayDetailDialog;
 import domon.cn.mmphoto.utils.PayUtils;
 import domon.cn.mmphoto.utils.PhoneUtil;
+import domon.cn.mmphoto.utils.SmsReceiver;
+import domon.cn.mmphoto.utils.TelephoneUtil;
 
 /**
  * Created by Domon on 2017/8/14.

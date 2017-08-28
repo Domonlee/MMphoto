@@ -3,8 +3,6 @@ package domon.cn.mmphoto.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.litesuits.common.utils.TelephoneUtil;
-
 import java.util.UUID;
 
 /**
