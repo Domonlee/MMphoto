@@ -29,21 +29,20 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void requestUserProfileData() {
 
         OkGo.<UserProfileData>get(Const.REQ_USER_ID + "id=" + SharedPreferenceUtil.getIntegerValue("userID"))
-                .params("userId", SharedPreferenceUtil.getIntegerValue("userID"))
                 .execute(new JsonCallback<UserProfileData>() {
                     @Override
                     public void onSuccess(Response<UserProfileData> response) {
                         UserProfileData user = response.body();
                         if (user != null) {
                             switch (user.getUser().getVIPType()) {
-                                case 0:
-                                    mView.updateBalance(user.getUser().getBalance(), 0);
-                                    break;
                                 case 1:
                                     mView.updateBalance(user.getUser().getBalance(), 1);
                                     break;
                                 case 2:
                                     mView.updateBalance(user.getUser().getBalance(), 2);
+                                    break;
+                                case 3:
+                                    mView.updateBalance(user.getUser().getBalance(), 3);
                                     break;
                                 default:
                                     break;

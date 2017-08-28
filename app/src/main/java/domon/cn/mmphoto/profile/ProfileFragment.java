@@ -67,12 +67,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
-        mUserNameTv.setText(SharedPreferenceUtil.getIntegerValue("userID") + "");
-
-
-        mBalanceTv.setText("金币余额:" +
-                SharedPreferenceUtil.getIntegerValue("userBalance"));
-
         mPresenter.requestUserProfileData();
         return view;
     }
@@ -101,6 +95,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @Override
     public void updateBalance(int balance, int vipType) {
+        mUserNameTv.setText(SharedPreferenceUtil.getIntegerValue("userID") + "");
         switch (vipType) {
             case 1:
                 SharedPreferenceUtil.setIntegerValue("userBalance", balance);
@@ -109,11 +104,11 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 break;
             case 2:
                 mBalanceTv.setText("年度会员");
-                SharedPreferenceUtil.setIntegerValue("VIPType",2);
+                SharedPreferenceUtil.setIntegerValue("VIPType", 2);
                 break;
             case 3:
                 mBalanceTv.setText("季度会员");
-                SharedPreferenceUtil.setIntegerValue("VIPType",3);
+                SharedPreferenceUtil.setIntegerValue("VIPType", 3);
                 break;
             default:
                 break;

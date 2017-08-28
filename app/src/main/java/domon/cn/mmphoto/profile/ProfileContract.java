@@ -11,7 +11,7 @@ public interface ProfileContract {
     interface View extends BaseView<Presenter> {
         void showEmptyError();
 
-        void updateBalance(int balance,int vipType);
+        void updateBalance(int balance, int vipType);
     }
 
     interface Presenter extends BasePresenter {

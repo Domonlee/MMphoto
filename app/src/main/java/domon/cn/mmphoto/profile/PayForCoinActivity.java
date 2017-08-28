@@ -146,7 +146,7 @@ public class PayForCoinActivity extends BaseActivity {
         if (mActionType == PAYFORCOIN) {
             mTitleTv.setText("购买金币");
             mData = Arrays.asList("50000金币,￥58元", "8000金币,￥38元", "4000金币,￥26元",
-                    "2000金币,￥18元", "40金币,￥3元");
+                    "2000金币,￥18元", "200金币,￥10元");
         } else if (mActionType == PAYFORVIP) {
             mTitleTv.setText("购买VIP会员");
             mData = Arrays.asList("包年会员,￥48.90元", "季度会员,￥28.90元");
