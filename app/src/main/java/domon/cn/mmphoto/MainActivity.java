@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import com.lzy.okgo.OkGo;
@@ -16,8 +15,7 @@ import com.yinglan.alphatabs.AlphaTabsIndicator;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import domon.cn.mmphoto.base.BaseActivity;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.category.CategoryFragment;
 import domon.cn.mmphoto.data.UserProfileData;
@@ -27,7 +25,7 @@ import domon.cn.mmphoto.utils.FragmentUtils;
 import domon.cn.mmphoto.utils.PhoneUtil;
 import domon.cn.mmphoto.utils.SharedPreferenceUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.container_fl)
     FrameLayout mContainer;
 
@@ -45,14 +43,10 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
     private Fragment mCurrentFragment;
 
-    private Unbinder unbind;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        unbind = ButterKnife.bind(this);
 
         mProfileAlphaTabView.showPoint();
 
@@ -147,11 +141,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mCurrentFragment = to;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbind.unbind();
     }
 }

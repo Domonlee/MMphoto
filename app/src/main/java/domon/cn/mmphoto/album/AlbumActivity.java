@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,12 +17,11 @@ import com.lzy.okgo.model.Response;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.MultipleHorAdapter;
+import domon.cn.mmphoto.base.BaseActivity;
 import domon.cn.mmphoto.callback.DialogCallback;
 import domon.cn.mmphoto.callback.JsonCallback;
 import domon.cn.mmphoto.data.AlbumData;
@@ -38,7 +36,7 @@ import domon.cn.mmphoto.utils.SharedPreferenceUtil;
  * Created by Domon on 2017/8/9.
  */
 
-public class AlbumActivity extends AppCompatActivity {
+public class AlbumActivity extends BaseActivity {
 
     public static final String ALBUMID = "albumId";
     @BindView(R.id.albumtitle_mid_tv)
@@ -47,7 +45,6 @@ public class AlbumActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @BindView(R.id.album_main_iv)
     ImageView mAlbumMainIv;
-    private Unbinder mUnbinder;
     private AlbumData mAlbumData = new AlbumData();
     private MultipleHorAdapter mAdapter;
     private String mAlbumId;
@@ -139,8 +136,6 @@ public class AlbumActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
 
-        mUnbinder = ButterKnife.bind(this);
-
         mAlbumId = getIntent().getStringExtra(ALBUMID);
 
         initRecyclerView();
@@ -179,11 +174,5 @@ public class AlbumActivity extends AppCompatActivity {
 
         mAdapter.setNewData(mAlbumData.getRecommend());
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
     }
 }
