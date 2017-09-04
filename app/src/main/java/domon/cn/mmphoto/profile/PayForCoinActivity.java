@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.PayCoinAdapter;
 import domon.cn.mmphoto.base.BaseActivity;
@@ -44,7 +43,6 @@ public class PayForCoinActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     private PayCoinAdapter mAdapter;
-    private Unbinder mUnbinder;
     private int mActionType;
     private List<String> mData = new ArrayList<>();
     private SmsReceiver mSmsReceiver;
@@ -59,8 +57,6 @@ public class PayForCoinActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paycoin);
-
-//        mUnbinder = ButterKnife.bind(this);
 
         mActionType = getIntent().getIntExtra("type", PAYFORCOIN);
 
@@ -175,7 +171,6 @@ public class PayForCoinActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        mUnbinder.unbind();
         mSmsReceiver.unRegisterSmsReceiver(PayForCoinActivity.this);
     }
 }

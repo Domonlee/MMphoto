@@ -16,8 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import domon.cn.mmphoto.Const;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.MultipleHorAdapter;
@@ -41,7 +39,6 @@ public class CategoryDetailActivity extends BaseActivity {
 
     private MultipleHorAdapter mAdapter;
 
-    private Unbinder mUnbinder;
     private int mCategoryType;
     private List<String> mTitleList = Arrays.asList("ROSI肉丝", "IMISS爱蜜社", "BoLoli波萝社", "MiiTao蜜桃社", "推女神");
 
@@ -62,7 +59,6 @@ public class CategoryDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_detail);
 
-        mUnbinder = ButterKnife.bind(this);
         mCategoryType = getIntent().getIntExtra(CategoryDetailActivity.CATEGORY_TYPE, 0);
         if (mCategoryType > 0) {
             mTitleTv.setText(mTitleList.get(mCategoryType - 1));
@@ -97,11 +93,5 @@ public class CategoryDetailActivity extends BaseActivity {
                         }
                     }
                 });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
     }
 }
