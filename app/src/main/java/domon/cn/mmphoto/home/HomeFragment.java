@@ -2,22 +2,18 @@ package domon.cn.mmphoto.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import domon.cn.mmphoto.R;
 import domon.cn.mmphoto.adapter.HomeAdapter;
+import domon.cn.mmphoto.base.BaseFragment;
 import domon.cn.mmphoto.data.Atlas;
 import domon.cn.mmphoto.data.MultipleItemHome;
 import domon.cn.mmphoto.utils.DataServer;
@@ -26,14 +22,13 @@ import domon.cn.mmphoto.utils.DataServer;
  * Created by Domon on 2017/8/9.
  */
 
-public class HomeFragment extends Fragment implements HomeContract.View {
+public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @BindView(R.id.title_mid_tv)
     TextView mTitleTv;
     @BindView(R.id.recycler_home)
     RecyclerView mRecyclerHome;
 
-    private Unbinder mUnbinder;
     private HomeContract.Presenter mPresenter;
     private HomeAdapter mHomeAdapter;
 
@@ -53,12 +48,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mPresenter = new HomePresenter(this);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        mUnbinder = ButterKnife.bind(this, view);
-
+    protected void onSetupView(View rootView) {
         mTitleTv.setText("推荐");
 
         mRecyclerHome.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -66,8 +57,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mRecyclerHome.setAdapter(mHomeAdapter);
 
         mPresenter.requestHomeData();
+    }
 
-        return view;
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_home;
     }
 
     @Override
@@ -84,11 +78,5 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void dataSuccess(Atlas atlas) {
         List<MultipleItemHome> reslut = DataServer.getMultipleItemData(atlas);
         mHomeAdapter.setNewData(reslut);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
     }
 }
