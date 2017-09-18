@@ -17,9 +17,8 @@ android {
             abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
 
-        jackOptions {
-            enabled true
-        }
+        android.compileOptions.sourceCompatibility 1.8
+        android.compileOptions.targetCompatibility 1.8
 
         lintOptions {
             abortOnError false
@@ -50,11 +49,14 @@ android {
                 signingConfig signingConfigs.release
 
                 applicationVariants.all { variant ->
-                    variant.outputs.each { output ->
+                    variant.outputs.all { output ->
                         def outputFile = output.outputFile
                         if (outputFile != null && outputFile.name.endsWith('release.apk')) {
                             def fileName = "MMPhoto_${defaultConfig.versionCode}_v${defaultConfig.versionName}.apk"
-                            output.outputFile = new File(outputFile.parent, fileName)
+//                            output.outputFile = new File(outputFile.parent, fileName)
+
+//                            def fileName = outputFile.name.replace("app", "xx00_${defaultConfig.versionCode}")
+                            outputFileName = new File(outputFile.parent, fileName)
                         }
 
                         if (outputFile != null && outputFile.name.endsWith('release-unsigned.apk')) {
@@ -96,7 +98,6 @@ android {
         compile 'com.github.bumptech.glide:glide:3.7.0'
         compile 'com.android.support:support-v4:25.3.1'
         annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
-        compile 'com.apkfuns.logutils:library:1.5.1.1'
         compile 'com.squareup.okhttp3:okhttp:3.8.1'
         compile 'com.yinglan.alphatabs:library:1.0.8'
         compile 'com.youth.banner:banner:1.4.9'
